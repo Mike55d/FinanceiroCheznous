@@ -1,0 +1,15 @@
+{% extends "::base.html.twig" %}
+
+{% block body %}
+<div class="row">
+	<div class="col-md-6 col-md-offset-3">
+		<div class="white-box">
+			<div class="box-title">Editar Codigo</div>
+			<form method="post" >
+				<input class="form-control" value="{{codigo.descripcion}}" type="text" name="descripcion"><br>
+				<button class="btn btn-success center-block">Editar</button>
+			</form>
+		</div>
+	</div>
+</div>
+{% endblock %}

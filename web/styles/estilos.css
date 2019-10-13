@@ -1,0 +1,70 @@
+ul#side-menu{
+	margin-top: 60px !important;
+}
+
+span.select2-container{
+	width: 100% !important;
+}
+
+.img-flag{
+	border-radius: 100px;
+	height: 50px;
+	width: 50px;
+	display: inline-block;
+	margin-right: 10px;
+	background-size: 50px;
+	background-position: center !important;
+	background-repeat: no-repeat !important;
+}
+
+.alineado{
+  vertical-align: middle;
+}
+
+.new-login-box{
+	width: 550px !important; 
+}
+
+.image{
+	height: 250px;
+	margin-bottom: 20px;
+}
+
+#file-input{
+	margin-bottom: 20px;
+}
+
+.img-small{
+	border-radius: 300px;
+	background-repeat: no-repeat !important;
+	background-position: center !important;
+	background-size: cover !important;
+	display: inline-block;
+	vertical-align: middle;
+	margin-right: 10px;
+	height: 50px;
+	width: 50px;
+}
+
+.img-small2{
+	border-radius: 300px;
+	background-repeat: no-repeat !important;
+	background-position: center !important;
+	background-size: cover !important;
+	display: inline-block;
+	vertical-align: middle;
+	margin-right: 10px;
+	height: 70px;
+	width: 70px;
+}
+
+.img-show{
+	border-radius: 500px;
+	background-repeat: no-repeat !important;
+	background-position: center !important;
+	background-size: cover !important;
+	display: inline-block;
+	vertical-align: middle;
+	height: 200px;
+	width: 200px;
+}

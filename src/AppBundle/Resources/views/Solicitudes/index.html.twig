@@ -1,0 +1,63 @@
+{% extends "::base.html.twig" %}
+
+{% block body %}
+{% for flash_message in app.session.flashBag.get('notice') %}
+<div class="row">
+	<div class="col-md-12">
+		<div class="alert alert-success" role="alert">
+			<h6>{{ flash_message }}</h6>
+		</div>
+	</div>
+</div>
+{% endfor %}
+<div class="row">
+	<div class="col-md-12">
+		<div class="white-box">
+			<div class="box-title">Solicitudes</div>
+			<div class="table-responsive">
+				<table id="tabla" class="table table-striped">
+					<thead>
+						<tr>
+							<th class="text-center">Id</th>
+							<th class="text-center">Caja solicitada</th>
+							<th class="text-center">Caja que solicita</th>
+							<th class="text-center">Usuario que solicita</th>
+							<th class="text-center">Usuario que aprueba</th>
+							<th class="text-center">Status</th>
+							<th class="text-center">Fecha</th>
+							<th class="text-center">Monto</th>
+							<th class="text-center">Acciones</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for solicitud in solicitudes %}
+						<tr class="text-center">
+							<td>{{solicitud.id}}</td>
+							<td>{{solicitud.cajaSolicitada.nombre|default('ninguno')}}</td>
+							<td>{{solicitud.cajaSolicita.nombre|default('ninguno')}}</td>
+							<td>{{solicitud.userSolicita.name|default('ninguno')}}</td>
+							<td>{{solicitud.userAprueba.name|default('ninguno')}}</td>
+							<td>{{solicitud.status}}</td>
+							<td>{{solicitud.fecha|date('d-m-Y')}}</td>
+							<td>{{solicitud.monto}}</td>
+							<td>
+							{% if (solicitud.status == 'pendiente' and solicitud.cajaSolicitada.id in misCajas ) or (app.user.rola == 'SUPER ADMIN' and solicitud.status == 'pendiente') %}
+								<a data-toggle="tooltip" data-placement="top" title="Rechazar" href="{{ path ('solicitudes_rechazar', {'id':solicitud.id})}}" class="btn btn-sm btn-danger m-r-5"><i class="fa fa-remove"></i></a>
+								<a data-toggle="tooltip" data-placement="top" title="Aprobar" href="{{ path ('solicitudes_aprobar', {'id':solicitud.id})}}" class="btn btn-sm btn-success"><i class="fa fa-plus"></i></a>
+							{% endif %}
+							</td>
+						</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+<script>
+$('#tabla').DataTable();
+</script>
+{% endblock %}

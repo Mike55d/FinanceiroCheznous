@@ -1,0 +1,79 @@
+{% extends "::base.html.twig" %}
+
+{% block body %}
+<div class="row">
+	<div class="col-md-12">
+		<a href="{{ path ('cajas_new')}}" class="btn btn-primary m-b-5">Nuevo</a>
+		<div class="white-box">
+			<div class="box-title">Cajas</div>
+			<div class="table-responsive">
+				<table id="cajas" class="table table-striped">
+					<thead>
+						<tr>
+							<th class="text-center" >Id</th>
+							<th class="text-center" >Codigo</th>
+							<th class="text-center" >Nombre</th>
+							<th class="text-center" >Orden</th>
+							<th class="text-center" >Saldo</th>
+							<th class="text-center" >Acciones</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for caja in cajas %}
+						<tr class="text-center">
+							<td>{{caja.id}}</td>
+							<td>{{caja.codigo|default('ninguno')}}</td>
+							<td>{{caja.nombre}}</td>
+							<td>{{caja.orden}}</td>
+							<td>{{caja.saldo}}</td>
+							<td>
+								<a data-toggle="tooltip" data-placement="top" title="Editar" href="{{ path ('cajas_edit',{'id':caja.id})}}" class="btn btn-sm btn-warning "><i class="fa fa-pencil"></i></a>
+								<button onclick="del({{caja.id}},'{{caja.nombre}}')" data-toggle="tooltip" data-placement="top" title="Eliminar" class="btn btn-sm btn-danger "><i class="fa fa-remove"></i></button>
+								<a data-toggle="tooltip" data-placement="top" title="Fondear" class="btn btn-sm btn-success" href="{{path ('addSaldo',{'id':caja.id})}}"><i class="fa fa-plus"></i></a>
+								<a data-toggle="tooltip" data-placement="top" title="Responsables" class="btn btn-sm btn-info" href="{{path ('responsables_index',{'id':caja.id})}}"><i class="fa fa-user"></i></a>
+								<a href="{{ path ('cajas_show',{'id':caja.id})}}" data-toggle="tooltip" data-placement="top" title="Detalles" href="#" class="btn btn-sm btn-primary"><i class="fa fa-eye"></i></a>
+							</td>
+						</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="col-md-4">
+		<!-- sample modal content -->
+		<div class="modal fade " id="delCaja" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" style="display: none;">
+			<div class="modal-dialog modal-sm">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+						<h4 class="modal-title" id="mySmallModalLabel"></h4>Eliminar Caja</div>
+						<div class="modal-body text-center"><p>
+							Seguro que quieres 
+							eliminar esta Caja ?
+						</p>
+						<h6 id="nameUser"></h6>
+					</div>
+						<div class="modal-footer">
+							<a href="" id="btn-del" class="btn btn-danger">Eliminar</a>
+						</div>
+					</div>
+					<!-- /.modal-content -->
+				</div>
+				<!-- /.modal-dialog -->
+			</div>
+			<!-- /.modal -->
+		</div>
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+    function del(id , name){
+    	$('#delCaja').modal('toggle');
+	$('#nameUser').text(name);
+	$('#btn-del').attr('href',`${id}/del`)
+}
+    	$('#cajas').DataTable();
+    </script>
+{% endblock %}

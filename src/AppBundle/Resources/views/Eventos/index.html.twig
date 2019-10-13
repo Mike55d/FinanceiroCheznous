@@ -1,0 +1,31 @@
+{% extends "::base.html.twig" %}
+
+{% block body %}
+<div class="row">
+	<div class="col-md-12">
+		<div class="white-box">
+			<div class="box-title">Eventos</div>
+			<div class="table-responsive">
+				<table id="cajas" class="table table-striped">
+					<thead>
+						<tr>
+							<th>Id</th>
+							<th>Evento</th>
+							<th>fecha</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for evento in eventos %}
+						<tr>
+							<td>{{evento.id}}</td>
+							<td>{{evento.evento}}</td>
+							<td>{{evento.fecha|date('d-m-Y')}}</td>
+						</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}

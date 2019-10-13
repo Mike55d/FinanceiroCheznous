@@ -1,0 +1,90 @@
+{% extends "::base.html.twig" %}
+
+{% block body %}
+<div class="row">
+	<div class="col-md-12">
+		<a href="{{ path ('users_new')}}" class="btn btn-primary m-b-5 pull-right ">Nuevo</a>
+	</div>
+	<div class="col-md-12">
+		<div class="white-box">
+			<div class="box-title">Usuarios</div>
+			<div class="table-responsive">
+				<table id="cajas" class="table table-striped">
+					<thead>
+						<tr>
+							<th class="text-center">Id</th>
+							<th class="text-center">Usuario</th>
+							<th class="text-center">Nombre</th>
+							<th class="text-center">Role</th>
+							<th>Activo</th>
+							<th class="text-center">Acciones</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for user in users %}
+						<tr class="text-center">
+							<td>{{user.id}}</td>
+							<td>{{user.username}}</td>
+							<td>{{user.name}}</td>
+							<td>{{user.rola}}</td>
+							<td><input onchange="change({{user.id}})" type="checkbox" {% if user.active %}checked{% endif %} class="js-switch" data-color="#13dafe" /></td>
+							<td>
+								<a data-toggle="tooltip" data-placement="top" title="Editar" href="{{ path ('users_edit',{'id':user.id})}}" class="btn btn-sm btn-warning "><i class="fa fa-pencil"></i></a>
+								<button data-toggle="tooltip" data-placement="top" title="Eliminar" onclick="del({{user.id}},'{{user.username}}')" class="btn btn-sm btn-danger"><i class="fa fa-remove"></i></button>
+								<a href="{{ path ('users_show',{'id':user.id})}}" data-toggle="tooltip" data-placement="top" title="Detalles" href="#" class="btn btn-sm btn-primary"><i class="fa fa-eye"></i></a>
+								<a data-toggle="tooltip" data-placement="top" title="Cajas" href="{{ path ('responsables_index_user',{'id':user.id})}}" class="btn btn-sm btn-info"><i class="fa fa-cube"></i></a>
+							</td>
+						</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="col-md-4">
+		<!-- sample modal content -->
+		<div class="modal fade " id="delUser" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" style="display: none;">
+			<div class="modal-dialog modal-sm">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+						<h4 class="modal-title" id="mySmallModalLabel">Eliminar Usuario</h4> </div>
+						<div class="modal-body text-center"><p>
+							Seguro que quieres 
+							eliminar este Registro ?
+						</p>
+						<h6 id="nameUser"></h6>
+					</div>
+						<div class="modal-footer">
+							<a href="" id="btn-del" class="btn btn-danger">Eliminar</a>
+						</div>
+					</div>
+					<!-- /.modal-content -->
+				</div>
+				<!-- /.modal-dialog -->
+			</div>
+			<!-- /.modal -->
+		</div>
+{% endblock %}
+{% block javascripts %}
+<script>
+
+function del(id , name){
+	$('#delUser').modal('toggle');
+	$('#nameUser').text(name);
+	$('#btn-del').attr('href',`${id}/del`)
+}
+$('#cajas').DataTable();
+function change(id){
+	datos = 'id='+ id
+	$.ajax({
+		type:"POST",
+		url:"{{path ('users_active')}}",
+		data:datos,
+		success:function(r){
+		}
+	});
+}
+</script>
+{% endblock %}

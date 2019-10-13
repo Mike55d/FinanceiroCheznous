@@ -1,0 +1,51 @@
+{% extends "::base.html.twig" %}
+
+{% block body %}
+<div class="row">
+	<div class="col-md-12">
+		<div class="white-box">
+			<div class="box-title">Transacciones</div>
+			<div class="table-responsive">
+				<table id="transferencias" class="table table-striped">
+					<thead>
+						<tr>
+							<th class="text-center">Id</th>
+							<th class="text-center">Caja que envia</th>
+							<th class="text-center">Caja que recibe</th>
+							<th class="text-center">Tipo</th>
+							<th class="text-center">Fecha</th>
+							<th class="text-center">Monto</th>
+							{#
+							<th class="text-center">Acciones</th>
+								#}
+						</tr>
+					</thead>
+					<tbody>
+						{% for transferencia in transferencias %}
+						<tr class="text-center">
+							<td>{{transferencia.id}}</td>
+							<td>{{transferencia.cajaEnvia.nombre|default('ninguno')}}</td>
+							<td>{{transferencia.cajaRecibe.nombre|default('ninguno')}}</td>
+							<td>{{transferencia.tipo}}</td>
+							<td>{{transferencia.fecha|date('d-m-Y')}}</td>
+							<td>{{transferencia.monto}}</td>
+								{#
+							<td>
+								<button data-toggle="tooltip" data-placement="top" title="Detalles" class="btn btn-sm btn-primary"><i class="fa fa-eye"></i></button>
+							</td>
+								#}
+						</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+    	$('#transferencias').DataTable();
+    </script>
+{% endblock %}

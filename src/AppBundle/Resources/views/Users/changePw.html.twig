@@ -1,0 +1,46 @@
+{% extends "::base.html.twig" %}
+
+{% block css %}
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/css/select2.css" rel="stylesheet" type="text/css" />
+{% endblock %}
+{% block body %}
+<div class="row">
+	<div class="col-md-6 col-md-offset-3">
+		<div class="white-box">
+			<div class="box-title">Cambiar contraseña</div>
+			<form method="post" id="userForm">
+				<div class="row">
+					<label for="">Contraseña</label>
+					<input required type="password" id="pw1" class="form-control m-b-5" name="pw">
+					<div id="pwMessage" style="display:none;"><p  class="text-danger">Contraseñas debe coincidir</p></div>
+					<label for="">Repetir contraseña</label>
+					<input required type="password" id="pw2" class="form-control m-b-5" name="ppw">
+					<button id="send" class="btn btn-success center-block">Enviar</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+{% endblock %}
+{% block javascripts %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/js/select2.js" type="text/javascript"></script>
+<script>
+$('#userForm').on('submit',function(event){
+	console.log('prevented');
+	event.preventDefault();
+});
+$('#send').click(function(){
+	if ($('#pw1').val() && $('#pw1').val() == $('#pw2').val()) {
+		console.log('pw correct');
+		$('#pwMessage').hide();
+		$('#userForm').unbind('submit');
+		$('#userForm').trigger('submit');
+		$('#send').unbind('click');
+	}else{
+		console.log('prevent');
+		$('#pwMessage').show();
+	}
+});
+</script>
+{% endblock %}

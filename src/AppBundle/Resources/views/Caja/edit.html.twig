@@ -1,0 +1,167 @@
+{% extends "::base.html.twig" %}
+
+{% block css %}
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/css/select2.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link href="{{ asset ('ample/bower_components/cropper/cropper.min.css')}}" rel="stylesheet">
+{% endblock %}
+{% block body %}
+<div class="row">
+	<div class="col-md-12">
+		<div class="white-box">
+			<div class="box-title">Editar Caja</div>
+			<form method="post" >
+				<div class="row">
+					<div class="col-md-6">
+						<label for="">Nombre</label>
+						<input required class="form-control m-b-5" value="{{caja.nombre}}" name="nombre" type="text">
+						<label for="">Direccion</label>
+						<input required class="form-control m-b-5" value="{{caja.direccion}}" name="direccion" type="text">
+						<label for="">Orden</label>
+						<select class="form-control m-b-5" name="orden" id="">
+							<option value="I">I</option>
+							<option value="II">II</option>
+						</select>
+						<label for="">Codigo Postal</label>
+						<input type="text" class="form-control m-b-5" value="{{caja.cp}}" name="cp">
+						<label for="">Codigo Empresarial</label>
+						<input type="text" class="form-control m-b-5" value="{{caja.ce}}" name="ce">
+						<input id="imageUrl" name="image" type="hidden">
+						{#
+						<label for="">Responsables</label>
+						<select class=" m-b-5 select2" multiple name="responsables[]" id="">
+							{% for user in users %}
+								<option {% if user.id in responsables %}selected{% endif %} value="{{user.id}}">{{user.name}} {{user.lastName}}</option>
+							{% endfor %}
+						</select>
+						#}
+					</div>
+					<div class="col-md-4 col-md-offset-1 text-center">
+						<div id="contImage1" class="col-md-12 image"><img id="imgSalida" height="250" src="{{ asset ('img/allImg/'~caja.image)}}" /></div>
+						<div style="display:none" id="contImage2" class="col-md-12 image"><img id="IMAGE" width="280" src="" /></div>
+						<div class="col-md-12 mb-10"><input class="form-control" id="file-input" type="file" /></div>
+						
+						<button class="btn btn-success center-block editarRegistro">Editar</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+{% endblock %}
+{% block javascripts %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/js/select2.js" type="text/javascript"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="{{ asset ('ample/bower_components/cropper/cropper.min.js')}}"></script>
+<script>
+$(function(){
+
+	$('#file-input').change(function(){
+		$('#contImage1').hide();
+		$('#contImage2').show();
+	});
+
+// CROPPER
+
+
+var $image = $('#IMAGE');
+$image.cropper({
+	movable: true,
+	aspectRatio: 9 / 12,
+	crop: function(event) {
+		console.log(event.detail.x);
+		console.log(event.detail.y);
+		console.log(event.detail.width);
+		console.log(event.detail.height);
+		console.log(event.detail.rotate);
+		console.log(event.detail.scaleX);
+		console.log(event.detail.scaleY);
+	}
+});
+
+// Get the Cropper.js instance after initialized
+var cropper = $image.data('cropper');
+
+  // Import image
+  var $inputImage = $('#file-input');
+  var URL = window.URL || window.webkitURL;
+  var blobURL;
+  var imagenSubida = false;
+  if (URL) {
+  	$inputImage.change(function () {
+  		imagenSubida = true
+  		var files = this.files;
+  		var file;
+
+  		if (!$image.data('cropper')) {
+  			return;
+  		}
+
+  		if (files && files.length) {
+  			file = files[0];
+
+  			if (/^image\/\w+$/.test(file.type)) {
+  				blobURL = URL.createObjectURL(file);
+  				$image.one('built.cropper', function () {
+
+            // Revoke when load complete
+            URL.revokeObjectURL(blobURL);
+          }).cropper('reset').cropper('replace', blobURL);
+  				$inputImage.val('');
+  			} else {
+  				window.alert('Please choose an image file.');
+  			}
+  		}
+  	});
+  } else {
+  	$inputImage.prop('disabled', true).parent().addClass('disabled');
+  }
+
+  $('#editTop').click(function(){
+  	console.log('clcikeado');
+  	if (cropper.getCroppedCanvas()) {
+  		var green = cropper.getCroppedCanvas().toDataURL('image/jpeg');
+  		console.log(green);
+  		if (imagenSubida) {
+  			$('#imageUrl').val(green);
+  		}
+  	}
+  	$('#formEditar').submit();
+  });
+
+  $('.editarRegistro').click(function(){
+  	var green = cropper.getCroppedCanvas().toDataURL('image/jpeg');
+  	console.log(green);
+  	if (imagenSubida) {
+  		$('#imageUrl').val(green);
+  	}
+  });
+// !!! FINISH CROPPER
+});
+</script>
+
+{#
+<script>
+
+
+	$(document).ready(function(){
+		function formatState (state) {
+	console.log(state);
+  //var baseUrl = "/user/pages/images/flags";
+  var $state = $(
+    `<p>
+    <div style="background-image: url(/ample/images/users/varun.jpg);" class="img-flag alineado"></div>
+    ${state.text}
+    </p>`
+  );
+  return $state;
+};
+		// For select 2
+     $(".select2").select2({
+     	templateResult: formatState
+     });
+	});
+</script>
+#}
+{% endblock %}

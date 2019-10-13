@@ -1,0 +1,130 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+<div class="row">
+    <div class="col-md-12">
+        <div class="white-box">
+            <h2 style="display:inline" class="box-title m-r-5">Hola {{app.user.name|upper}} ,</h2>
+            <h5 style="display:inline" class="m-l-5" >Bienvenido</h5> 
+        </div>
+    </div>
+</div>
+<div class="col-lg-12 col-sm-12 col-xs-12">
+    <div class="row">
+        {% if app.user.rola == 'SUPER ADMIN' %}
+        <div class="col-lg-3 col-sm-6 col-xs-12 text-center">
+            <div class="white-box">
+                <a href="{{ path ('users_index')}}" class="box-title">Usuarios</a>
+                <ul class="list-inline m-t-30 p-t-10 two-part">
+                    <li><i class="icon-people text-info"></i></li>
+                    <li class="text-right"><span class="counter">{{users|length}}</span></li>
+                </ul>
+            </div>
+        </div>
+        {% endif %}
+        <div class="col-lg-3 col-sm-6 col-xs-12 text-center">
+            <div class="white-box">
+                <a href="{{ path ('cajas_index')}}" class="box-title">Cajas</a>
+                <ul class="list-inline m-t-30 p-t-10 two-part">
+                    <li><i class="icon-folder text-purple"></i></li>
+                    <li class="text-right"><span class="counter">{{cajas|length}}</span></li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-lg-3 col-sm-6 col-xs-12 text-center">
+            <div class="white-box">
+                <a href="{{ path ('solicitudes_pendientes')}}" class="box-title">Solicitudes pendientes</a>
+                <ul class="list-inline m-t-30 p-t-10 two-part">
+                    <li><i class="icon-folder-alt text-danger"></i></li>
+                    <li class="text-right"><span class="">{{pendientes|length}}</span></li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-lg-3 col-sm-6 col-xs-12 text-center">
+            <div class="white-box">
+                <a href="{{ path ('transferencias')}}" class="box-title">Transferencias Hechas Hoy </a>
+                <ul class="list-inline m-t-30 p-t-10 two-part">
+                    <li><i class="ti-wallet text-success"></i></li>
+                    <li class="text-right"><span class="">117</span></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% if app.user.rola != 'SUPER ADMIN' %}
+<div class="col-lg-6 col-sm-12 col-md-6">
+    <div class="panel">
+        <div class="p-20">
+            <div class="row">
+                <div class="col-md-12">
+                    <h2 class="text-center">MIS CAJAS</h2>
+                    <h4 class="m-b-0">Total en cajas</h4>
+                    <h2 class="m-t-0 font-medium">{{total}}$</h2>
+                </div>
+            </div>
+        </div>
+        <div class="panel-footer bg-extralight">
+            <ul class="earning-box">
+                {% for caja in misCajas %}
+                    <li>
+                    <div class="er-row">
+                        <div class="er-pic">
+                            <span class="img-small2" style="background-image: url('{{ asset ('img/allImg/'~caja.caja.image)}}');"></span>
+                        </div>
+                        <div class="er-text">
+                            <h4>{% if caja.responsable == 1 %}Responsable {% else %}No responsable {% endif %}</h4>
+                            <h3>{{caja.caja.nombre}}</h3><span class="text-muted">{{caja.caja.direccion}}</span>
+                        </div>
+                            <div class="er-count "><span class="counter">{{caja.caja.saldo}}$</span></div>
+                        </div>
+                    </li>
+                {% endfor %}
+                    <div class="row">
+                        <div class="col-md-6">
+                            <a href="{{ path ('transferir')}}" class="btn btn-rounded btn-danger btn-block p-10">Transferir</a>
+                        </div>
+                        <div class="col-md-6">
+                            <a href="{{ path ('solicitar')}}" class="btn btn-rounded btn-success btn-block p-10">Solicitar</a>
+                        </div>
+                    </div>
+                </ul>
+            </div>
+        </div>
+    </div>
+{% endif %}
+
+{% if app.user.rola == 'SUPER ADMIN' %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="white-box">
+                <h3 class="box-title text-center">Movimientos recientes</h3>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>id</th>
+                                <th>Cja envia</th>
+                                <th>Cja recice</th>
+                                <th>tipo</th>
+                                <th>fecha</th>
+                                <th>Monto</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for transaccion in transacciones %}
+                                <tr>
+                                <td>{{transaccion.id}}</td>
+                                <td>{{transaccion.cajaEnvia.nombre}}</td>
+                                <td>{{transaccion.cajaRecibe.nombre}}</td>
+                                <td>{{transaccion.tipo}}</td>
+                                <td>{{transaccion.fecha|date('d-m-Y')}}</td>
+                                <td>{{transaccion.monto}}$</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+   </div>
+{% endif %}
+   {% endblock %}

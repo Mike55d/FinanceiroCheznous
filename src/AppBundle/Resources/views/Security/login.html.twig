@@ -1,0 +1,105 @@
+{% extends 'baseLogin.html.twig' %}
+{% block body %}
+<section id="wrapper" class="login-register">
+	<div class="login-box login-sidebar">
+		<div class="white-box">
+			<form method="POST" action="{{ path ('login')}}" class="form-horizontal form-material" id="loginform" action="index.html">
+				<a href="javascript:void(0)" class="text-center db"><img src="{{ asset ('ample/images/admin-logo-dark.png')}}" alt="Home" /><br/><img src="{{ asset ('ample/images/admin-text-dark.png')}}" alt="Home" /></a>  
+
+				<div class="form-group m-t-40">
+					<div class="col-xs-12">
+						<input class="form-control" type="text" name="_username" required="" placeholder="Username">
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-xs-12">
+						<input class="form-control" type="password" name="_password" required="" placeholder="Password">
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-md-12">
+						<div class="checkbox checkbox-primary pull-left p-t-0">
+							
+						</div>
+						<a href="javascript:void(0)" id="to-recover" class="text-dark pull-right"><i class="fa fa-lock m-r-5"></i>Olvide mi contraseña</a> </div>
+					</div>
+					<div class="form-group text-center m-t-20">
+						<div class="col-xs-12">
+							<button class="btn btn-info btn-lg btn-block text-uppercase waves-effect waves-light" type="submit">Log In</button>
+						</div>
+					</div>
+					<div class="row">
+						
+					</div>
+					<div class="form-group m-b-0">
+						<div class="col-sm-12 text-center">
+							<p>No tienes cuenta? <a href="{{ path ('users_register')}}" class="text-primary m-l-5"><b>Registrate</b></a></p>
+						</div>
+					</div>
+				</form>
+				{% if error %}
+				<div class="text-center">
+					<h3 class="text-danger">
+						{{ error.messageKey|trans(error.messageData, 'security')|replace({"Invalid credentials." : "Email o contraseña invalidas"}) }}
+					</h3>
+				</div>
+				{% endif %}
+				<div id="recoverform">
+					<div class="form-group ">
+						<div class="col-xs-12">
+							<h3>Reenviar contraseña</h3>
+							<p class="text-muted">Introduzca su email para reenviar su contraseña </p>
+						</div>
+					</div>
+					<div class="form-group ">
+						<div class="col-xs-12">
+							<input class="form-control" id="mail" type="text" placeholder="Email">
+							<p style="display:none" id="noEmail" class="text-danger">Este email no esta asociado a ningun usuario</p>
+							<p style="display:none" id="email" class="text-success">La contraseña fue enviada a su email</p>
+						</div>
+					</div>
+					<div class="form-group text-center m-t-20">
+						<div class="col-xs-12 m-t-5">
+							<button id="send" class="btn btn-primary btn-lg btn-block text-uppercase waves-effect waves-light" >Enviar</button><br><br>
+							<button id="login" class="btn btn-success">login</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	{% endblock %}
+	{% block javascripts %}
+	<script>
+	/* ===== Login and Recover Password ===== */
+	$('#to-recover').on("click", function () {
+		$("#loginform").slideUp();
+		$("#recoverform").fadeIn();
+	});
+	$('#login').on('click',function(){
+		$("#recoverform").fadeOut();
+		$('#loginform').slideDown();
+	});
+	$('#send').click(function(){
+		$('#send').text('Enviando...');
+		datos  = 'email='+$('#mail').val();
+		$.ajax({
+			type:"POST",
+			url:"{{path ('users_lostPw')}}",
+			data:datos,
+			success:function(r){
+				if (r){
+					$('#email').show();
+					$('#noEmail').hide();
+
+				}else{
+					$('#email').hide();
+					$('#noEmail').show();
+				}  
+				$('#send').text('Enviar');
+			}
+
+		});
+	});
+	</script>
+	{% endblock %}

@@ -1,0 +1,79 @@
+<?php
+
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Transaccion
+ *
+ * @ORM\Table(name="transaccion")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\TransaccionRepository")
+ */
+class Transaccion
+{
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+    * @ORM\ManyToOne(targetEntity="Caja")
+    * @ORM\JoinColumn(name="caja_envia", referencedColumnName="id")
+    */
+    private $cajaEnvia;
+
+/**
+    * @ORM\ManyToOne(targetEntity="Caja")
+    * @ORM\JoinColumn(name="caja_recibe", referencedColumnName="id")
+    */
+    private $cajaRecibe;
+
+    /**
+    * @ORM\ManyToOne(targetEntity="User")
+    * @ORM\JoinColumn(name="user_envia", referencedColumnName="id" , nullable=true)
+    */
+    private $userEnvia;
+
+    /**
+    * @ORM\ManyToOne(targetEntity="User")
+    * @ORM\JoinColumn(name="user_aprueba", referencedColumnName="id" , nullable=true)
+    */
+    private $userAprueba;
+
+    /**
+    * @ORM\ManyToOne(targetEntity="User")
+    * @ORM\JoinColumn(name="user_solicita", referencedColumnName="id" , nullable=true)
+    */
+    private $userSolicita;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="tipo", type="string", length=255)
+     */
+    private $tipo;
+
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="fecha", type="datetime")
+     */
+    private $fecha;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="monto", type="integer")
+     */
+    private $monto;
+
+
+  
+}
+

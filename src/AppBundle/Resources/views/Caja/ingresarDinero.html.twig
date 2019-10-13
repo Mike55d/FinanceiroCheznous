@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+<div class="row">
+	<div class="col-md-8 col-md-offset-2">
+		<div class="white-box">
+			<div class="box-title">Agregar Saldo</div>
+			<form >
+				<input type="text" id="saldo" placeholder="0,00 R$"  name="saldo" placeholder="" class="form-control m-b-5 input-lg"><br>
+				<button id="send" class="btn btn-success">Agregar</button>
+			</form>
+		</div>
+	</div>
+</div> 
+{% endblock %}
+{% block javascripts %}
+<script src="{{ asset ('js/maskMoney/src/jquery.maskMoney.js')}}" type="text/javascript"></script>
+<script>
+$(document).ready(function(){
+		$("#saldo").maskMoney({thousands:'.', decimal:',', allowZero: true, suffix: ' R$'});
+$('#send').click(function(){
+	var monto = $('#saldo').maskMoney('unmasked')[0];
+	$('#saldo').val(monto);
+});
+});
+
+</script>
+{% endblock %}
