@@ -24,8 +24,8 @@ class CajaController extends Controller
         $em =$this->getDoctrine()->getManager(); 
         $cajas  = $em->getRepository('AppBundle:Caja')->findALl(); 
         return $this->render('AppBundle:Caja:index.html.twig', array(
-         'cajas'=> $cajas,
-     ));
+           'cajas'=> $cajas,
+       ));
     }
 
     /**
@@ -48,25 +48,29 @@ class CajaController extends Controller
             $caja->setDescripcion($request->get('descripcion'));
                 //insertar imagen
             if ($request->get('image')) {
-               $img = $request->get('image');
-               $img = str_replace('data:image/jpeg;base64,', '', $img);
-               $img = str_replace(' ', '+', $img);
-               $data = base64_decode($img);
-               $file = 'image.jpeg';
-               $success = file_put_contents($file, $data);
-               $file = new File($file);
-               $fileName = md5(uniqid()).'.'.$file->guessExtension();
-               $file->move($this->getParameter('images'),$fileName);
-               $caja->setImage($fileName);
-           }
-            $em->persist($caja);
-            $em->flush();
-            return $this->redirectToRoute('cajas_index');
-        }
-        return $this->render('AppBundle:Caja:new.html.twig', array(
-            'codigos' => $codigos
-        ));
-    }
+             $img = $request->get('image');
+             $img = str_replace('data:image/jpeg;base64,', '', $img);
+             $img = str_replace(' ', '+', $img);
+             $data = base64_decode($img);
+             $file = 'image.jpeg';
+             $success = file_put_contents($file, $data);
+             $file = new File($file);
+             $fileName = md5(uniqid()).'.'.$file->guessExtension();
+             $file->move($this->getParameter('images'),$fileName);
+             $caja->setImage($fileName);
+         }
+         $em->persist($caja);
+         $em->flush();
+         $this->addFlash(
+            'notice',
+            'Caja '.$caja->getNombre().' creada satisfactoriamente'
+        );
+         return $this->redirectToRoute('cajas_index');
+     }
+     return $this->render('AppBundle:Caja:new.html.twig', array(
+        'codigos' => $codigos
+    ));
+ }
 
     /**
      * @Route("/{id}/edit" , name="cajas_edit")
@@ -75,7 +79,6 @@ class CajaController extends Controller
     {
         $em =$this->getDoctrine()->getManager(); 
         $users = $em->getRepository('AppBundle:User')->findAll(); 
-        $codigos = $em->getRepository('AppBundle:Codigo')->findAll(); 
         /*
         $responsables = $em->getRepository('AppBundle:responsablesCaja')
         ->findByCaja($caja);
@@ -90,9 +93,6 @@ class CajaController extends Controller
             $caja->setOrden($request->get('orden'));
             $caja->setCp($request->get('cp'));
             $caja->setCe($request->get('ce'));
-            $codigo = $em->getRepository('AppBundle:Codigo')
-            ->find($request->get('codigo')); 
-            $caja->setCodigo($codigo);
             /*
             foreach ($responsablesCaja as $respCaja) {
                 if (!in_array($respCaja, $request->get('responsables'))) {
@@ -116,30 +116,33 @@ class CajaController extends Controller
             */
                 //insertar imagen
             if ($request->get('image')) {
-               $img = $request->get('image');
-               $img = str_replace('data:image/jpeg;base64,', '', $img);
-               $img = str_replace(' ', '+', $img);
-               $data = base64_decode($img);
-               $file = 'image.jpeg';
-               $success = file_put_contents($file, $data);
-               $file = new File($file);
-               $fileName = md5(uniqid()).'.'.$file->guessExtension();
-               $file->move($this->getParameter('images'),$fileName);
-               $caja->setImage($fileName);
-           }
-            $em->persist($caja);
-            $em->flush();
-            return $this->redirectToRoute('cajas_index');
-        }
-        return $this->render('AppBundle:Caja:edit.html.twig', array(
-            'codigos' => $codigos,
-            'caja' => $caja,
+             $img = $request->get('image');
+             $img = str_replace('data:image/jpeg;base64,', '', $img);
+             $img = str_replace(' ', '+', $img);
+             $data = base64_decode($img);
+             $file = 'image.jpeg';
+             $success = file_put_contents($file, $data);
+             $file = new File($file);
+             $fileName = md5(uniqid()).'.'.$file->guessExtension();
+             $file->move($this->getParameter('images'),$fileName);
+             $caja->setImage($fileName);
+         }
+         $em->persist($caja);
+         $em->flush();
+         $this->addFlash(
+            'notice',
+            'Caja '.$caja->getNombre().' actualizada'
+        );
+         return $this->redirectToRoute('cajas_index');
+     }
+     return $this->render('AppBundle:Caja:edit.html.twig', array(
+        'caja' => $caja,
             /*
             'responsables'=> $responsablesCaja,
             'users'=> $users
             */
         ));
-    }
+ }
 
     /**
      * @Route("/{id}/del" , name="cajas_del")
@@ -149,6 +152,10 @@ class CajaController extends Controller
         $em =$this->getDoctrine()->getManager(); 
         $em->remove($caja);
         $em->flush();
+        $this->addFlash(
+            'notice',
+            'Caja '.$caja->getnombre().' eliminada'
+        );
         return $this->redirectToRoute('cajas_index');
     }
 
@@ -162,8 +169,12 @@ class CajaController extends Controller
         if ($request->get('saldo')) {
             $caja->setSaldo($caja->getSaldo() + $request->get('saldo'));
             $em->flush();
+            $this->addFlash(
+                'notice',
+                $request->get('saldo').' añadidos a '.$caja->getNombre()
+            );
             return $this->redirectToRoute('cajas_index');
-         } 
+        } 
         return $this->render('AppBundle:Caja:ingresarDinero.html.twig', array(
             'caja' => $caja
         ));

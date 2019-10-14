@@ -4,8 +4,9 @@
 	<div class="col-md-8 col-md-offset-2">
 		<div class="white-box">
 			<div class="box-title">Agregar Saldo</div>
-			<form >
-				<input type="text" id="saldo" placeholder="0,00 R$"  name="saldo" placeholder="" class="form-control m-b-5 input-lg"><br>
+			<form method="post" >
+				<input hidden="" id="saldo2" name="saldo" type="text">
+				<input type="text" id="saldo" placeholder="0,00 R$"   placeholder="" class="form-control m-b-5 input-lg"><br>
 				<button id="send" class="btn btn-success">Agregar</button>
 			</form>
 		</div>
@@ -19,7 +20,7 @@ $(document).ready(function(){
 		$("#saldo").maskMoney({thousands:'.', decimal:',', allowZero: true, suffix: ' R$'});
 $('#send').click(function(){
 	var monto = $('#saldo').maskMoney('unmasked')[0];
-	$('#saldo').val(monto);
+	$('#saldo2').val(monto);
 });
 });
 

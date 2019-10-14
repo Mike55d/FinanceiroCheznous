@@ -17,27 +17,28 @@
 						<div id="codigoFocus"><input id="codigo" required class="form-control m-b-5" name="codigo" type="text"></div>
 						<div id="codigoMessage" style="display:none;"><p  class="text-danger">Codigo ya existente</p></div>
 						<label for="">Nombre</label>
-						<input required class="form-control m-b-5" name="nombre" type="text">
+						<input id="nombre" required class="form-control m-b-5" name="nombre" type="text">
 						<label for="">Descripcion</label>
 						<textarea required name="descripcion" class="form-control" id="" cols="30" rows="2"></textarea>
 						<label for="">Direccion</label>
-						<input required class="form-control m-b-5" name="direccion" type="text">
+						<input id="direccion" required class="form-control m-b-5" name="direccion" type="text">
 						<label for="">Orden</label>
 						<select required class="form-control m-b-5" name="orden" id="">
 							<option value="I">I</option>
 							<option value="II">II</option>
 						</select>
 						<label for="">Codigo Postal</label>
-						<input required type="text" class="form-control m-b-5" name="cp">
+						<input id="cp" required type="text" class="form-control m-b-5" name="cp">
 						<input id="imageUrl" name="image" type="hidden">
 						<label for="">CNPJ</label>
-						<input required type="text" class="form-control m-b-5" name="ce">
+						<input id="ce" required type="text" class="form-control m-b-5" name="ce">
 					</div>
 					<div class="col-md-6">
 						<div class="col-md-12 image"><img id="IMAGE" width="280" src="" /></div>
 						<div class="col-md-12 mb-10"><input class="form-control" id="file-input" type="file" /></div>
 						<label for="">Saldo</label>
-						<input id="saldo" required type="text" name="saldo" min="0" placeholder="0,00 R$" class="form-control m-b-5 input-lg"><br>
+						<input hidden id="saldo2" name="saldo" type="text">
+						<input id="saldo" required type="text"  min="0" placeholder="0,00 R$" class="form-control m-b-5 input-lg"><br>
 					<button id="crear" class="btn btn-success center-block">Crear</button>
 					</form>
 				</div>
@@ -54,6 +55,20 @@
 <script src="{{ asset ('ample/bower_components/cropper/cropper.min.js')}}"></script>
 <script>
 $(document).ready(function(){
+	$( "#nombre" ).autocomplete({
+		source: availablePhones
+	});
+	$( "#direccion" ).autocomplete({
+		source: availableParents
+	});
+	$( "#cp" ).autocomplete({
+		source: availableBarrios
+	});
+	$( "#ce" ).autocomplete({
+		source: availableColegios
+	});
+
+	$("#saldo").maskMoney({thousands:'.', decimal:',', allowZero: true, suffix: ' R$'});
 	var enviar = false;
 	$('#codigoFocus').on('focusout',function(){
 	console.log('focusot');
@@ -65,8 +80,9 @@ $(document).ready(function(){
 		success:function(result){
 			if (result){
 				$('#codigoMessage').hide();
-				enviar = true
+				enviar = true;
 			}else{
+				enviar = false;
 				$('#codigoMessage').show();
 			}                           
 		}
@@ -75,6 +91,14 @@ $(document).ready(function(){
 	$('#cajaForm').on('submit',function(event){
 	console.log('prevented');
 	if (enviar) {
+		var monto = $('#saldo').maskMoney('unmasked')[0];
+  	$('#saldo2').val(monto);
+  	if (cropper.getCroppedCanvas()) {
+  	var green = cropper.getCroppedCanvas().toDataURL('image/jpeg');
+  	}
+  	if (imagenSubida) {
+  		$('#imageUrl').val(green);
+  	}
 		$('#cajaForm').unbind('submit');
 		$('#cajaForm').submit();
 		//$('#crear').unbind('click');
@@ -82,7 +106,7 @@ $(document).ready(function(){
 		event.preventDefault();
 	}
 });
-	$("#saldo").maskMoney({thousands:'.', decimal:',', allowZero: true, suffix: ' R$'});
+	
      // CROPPER
 
      var $image = $('#IMAGE');
@@ -139,26 +163,8 @@ var cropper = $image.data('cropper');
   	$inputImage.prop('disabled', true).parent().addClass('disabled');
   }
 
-  $('#crear').click(function(){
-  	var monto = $('#saldo').maskMoney('unmasked')[0];
-  	$('#saldo').val(monto);
-  	if (cropper.getCroppedCanvas()) {
-  	var green = cropper.getCroppedCanvas().toDataURL('image/jpeg');
-  	}
-  	if (imagenSubida) {
-  		$('#imageUrl').val(green);
-  	}
-  });
 // !!! FINISH CROPPER
 });
-
-
-
-
-$('#crear').click(function(){
-	console.log('clicked');
-});
-
 
 </script>
 {% endblock %}

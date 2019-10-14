@@ -168,6 +168,10 @@ use AppBundle\Entity\Transaccion;
             $solicitud->setStatus('pendiente');
             $em->persist($solicitud);
             $em->flush();
+            $this->addFlash(
+                'notice',
+                'Solicitud enviada'
+            );
             return $this->redirectToRoute('solicitudes_index');
         }
         return $this->render('AppBundle:Solicitudes:new.html.twig', array(

@@ -68,3 +68,12 @@ span.select2-container{
 	height: 200px;
 	width: 200px;
 }
+
+.text-white{
+	color: white;
+}
+
+.text-bold{
+	font-size: 15px;
+	font-weight: bold;
+}

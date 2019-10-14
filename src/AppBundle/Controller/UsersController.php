@@ -54,6 +54,10 @@ class UsersController extends Controller
             $user->setPassword($password);
             $em->persist($user);
             $em->flush();
+            $this->addFlash(
+                'notice',
+                'Usuario '.$user->getUsername().' creado correctamente'
+            );
             return $this->redirectToRoute('users_index');
         }
         return $this->render('AppBundle:Users:new.html.twig', array(
@@ -84,6 +88,10 @@ class UsersController extends Controller
             $evento->setFecha(new \Datetime());
             $em->persist($evento);
             $em->flush();
+            $this->addFlash(
+                'notice',
+                'Usuario '.$user->getName().' actualizado correctamente'
+            );
             return $this->redirectToRoute('users_index');
         }
         return $this->render('AppBundle:Users:edit.html.twig', array(
@@ -99,6 +107,10 @@ class UsersController extends Controller
         $em =$this->getDoctrine()->getManager(); 
         $em->remove($user);
         $em->flush();
+        $this->addFlash(
+                'notice',
+                'Usuario '.$user->getName().' eliminado correctamente'
+            );
         return $this->redirectToRoute('users_index');
     }
 
@@ -185,6 +197,10 @@ class UsersController extends Controller
             $evento->setFecha(new \Datetime());
             $em->persist($evento);
             $em->flush();
+            $this->addFlash(
+                'notice',
+                'Tus datos han sido actualizados correctamente'
+            );
             return $this->redirectToRoute('homepage');
         }
         return $this->render('AppBundle:Users:editUser.html.twig', array(
@@ -221,22 +237,26 @@ class UsersController extends Controller
         ->getToken()->getUser();
             //insertar imagen
         if ($request->get('image')) {
-         $img = $request->get('image');
-         $img = str_replace('data:image/jpeg;base64,', '', $img);
-         $img = str_replace(' ', '+', $img);
-         $data = base64_decode($img);
-         $file = 'image.jpeg';
-         $success = file_put_contents($file, $data);
-         $file = new File($file);
-         $fileName = md5(uniqid()).'.'.$file->guessExtension();
-         $file->move($this->getParameter('images'),$fileName);
-         $user->setImage($fileName);
-         $em->flush();
-         return $this->redirectToRoute('homepage');
-     }
-     return $this->render('AppBundle:Users:changeImage.html.twig', array(
-     ));
- }
+           $img = $request->get('image');
+           $img = str_replace('data:image/jpeg;base64,', '', $img);
+           $img = str_replace(' ', '+', $img);
+           $data = base64_decode($img);
+           $file = 'image.jpeg';
+           $success = file_put_contents($file, $data);
+           $file = new File($file);
+           $fileName = md5(uniqid()).'.'.$file->guessExtension();
+           $file->move($this->getParameter('images'),$fileName);
+           $user->setImage($fileName);
+           $em->flush();
+           $this->addFlash(
+                'notice',
+                'Tu imagen de perfil ah sido actualizada correctamente'
+            );
+           return $this->redirectToRoute('homepage');
+       }
+       return $this->render('AppBundle:Users:changeImage.html.twig', array(
+       ));
+   }
 
      /**
      * @Route("/users/active" , name="users_active")

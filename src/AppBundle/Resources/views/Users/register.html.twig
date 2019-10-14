@@ -14,7 +14,9 @@
 				<div class="col-md-6">
 					<form method="post" id="userForm">
 						<label for="">Nombre de usuario</label>
-						<input required id="username" class="form-control m-b-5" name="username" type="text">
+						<div id="divUser">
+							<input required id="username" class="form-control m-b-5" name="username" type="text">
+						</div>
 						<div id="userMessage" style="display:none;"><p  class="text-danger">Nombre de usuario ya existente</p></div>
 						<label for="">Nombre</label>
 						<input required class="form-control m-b-5" name="nombre" type="text">
@@ -42,30 +44,32 @@
 
 	{% block javascripts %}
 	<script>
-/*
-$('#userForm').on('submit',function(event){
-});
-*/
-$('#userForm').on('submit',function(event){
-	console.log('prevented');
-	event.preventDefault();
-});
-$('#send').click(function(){
-	console.log('clicked');
-	datos = 'username='+ $('#username').val();
-	$.ajax({
-		type:"POST",
-		url:"{{path ('users_valid')}}",
-		data:datos,
-		success:function(result){
-			if (result){
-				$('#userMessage').hide();
-					$('#userForm').unbind('submit');
-					$('#userForm').trigger('submit');
-					$('#send').unbind('click');
-			}else{
-				$('#userMessage').show();
-			}                           
+$(document).ready(function(){
+	var enviar = false;
+	$('#divUser').on('focusout',function(){
+		console.log('blue');
+		datos = 'username='+ $('#username').val();
+		$.ajax({
+			type:"POST",
+			url:"{{path ('users_valid')}}",
+			data:datos,
+			success:function(result){
+				if (result){
+					enviar = true;
+					$('#userMessage').hide();	
+				}else{
+					enviar = false;
+					$('#userMessage').show();
+				}                           
+			}
+		});
+	})
+	$('#userForm').on('submit',function(event){
+		if (enviar) {
+				$('#userForm').unbind('submit');
+				$('#userForm').submit();
+		}else{
+			event.preventDefault();
 		}
 	});
 });

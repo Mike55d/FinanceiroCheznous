@@ -1,6 +1,15 @@
 {% extends "::base.html.twig" %}
 
 {% block body %}
+{% for flash_message in app.session.flashBag.get('notice') %}
+<div class="row">
+	<div class="col-md-12">
+		<div class="alert alert-success" role="alert">
+			<h6>{{ flash_message }}</h6>
+		</div>
+	</div>
+</div>
+{% endfor %}
 <div class="row">
 	<div class="col-md-12">
 		<a href="{{ path ('codigos_new')}}" class="btn btn-primary m-b-5 pull-right ">Nuevo</a>

@@ -1,6 +1,15 @@
 {% extends "::base.html.twig" %}
 
 {% block body %}
+{% for flash_message in app.session.flashBag.get('notice') %}
+<div class="row">
+	<div class="col-md-6 col-md-offset-3">
+		<div class="alert alert-success text-center" role="alert">
+			<h3 class="text-white">{{ flash_message }}</h3>
+		</div>
+	</div>
+</div>
+{% endfor %}
 <div class="row">
 	<div class="col-md-12">
 		<div class="white-box">
@@ -14,7 +23,7 @@
 							<th class="text-center">Caja que recibe</th>
 							<th class="text-center">Tipo</th>
 							<th class="text-center">Fecha</th>
-							<th class="text-center">Monto</th>
+							<th class="text-left">Monto</th>
 							{#
 							<th class="text-center">Acciones</th>
 								#}
@@ -22,13 +31,13 @@
 					</thead>
 					<tbody>
 						{% for transferencia in transferencias %}
-						<tr class="text-center">
-							<td>{{transferencia.id}}</td>
-							<td>{{transferencia.cajaEnvia.nombre|default('ninguno')}}</td>
-							<td>{{transferencia.cajaRecibe.nombre|default('ninguno')}}</td>
-							<td>{{transferencia.tipo}}</td>
-							<td>{{transferencia.fecha|date('d-m-Y')}}</td>
-							<td>{{transferencia.monto}}</td>
+						<tr >
+							<td class="text-center" >{{transferencia.id}}</td>
+							<td class="text-center" >{{transferencia.cajaEnvia.nombre|default('ninguno')}}</td>
+							<td class="text-center" >{{transferencia.cajaRecibe.nombre|default('ninguno')}}</td>
+							<td class="text-center" >{{transferencia.tipo}}</td>
+							<td class="text-center" >{{transferencia.fecha|date('d-m-Y')}}</td>
+							<td class="text-left text-bold">{{transferencia.monto|number_format(2,',','.')}} R$</td>
 								{#
 							<td>
 								<button data-toggle="tooltip" data-placement="top" title="Detalles" class="btn btn-sm btn-primary"><i class="fa fa-eye"></i></button>

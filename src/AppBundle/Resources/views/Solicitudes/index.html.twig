@@ -3,9 +3,9 @@
 {% block body %}
 {% for flash_message in app.session.flashBag.get('notice') %}
 <div class="row">
-	<div class="col-md-12">
-		<div class="alert alert-success" role="alert">
-			<h6>{{ flash_message }}</h6>
+	<div class="col-md-6 col-md-offset-3">
+		<div class="alert alert-success text-center" role="alert">
+			<h3 class="text-white">{{ flash_message }}</h3>
 		</div>
 	</div>
 </div>
@@ -25,21 +25,21 @@
 							<th class="text-center">Usuario que aprueba</th>
 							<th class="text-center">Status</th>
 							<th class="text-center">Fecha</th>
-							<th class="text-center">Monto</th>
+							<th class="text-left">Monto</th>
 							<th class="text-center">Acciones</th>
 						</tr>
 					</thead>
 					<tbody>
 						{% for solicitud in solicitudes %}
-						<tr class="text-center">
-							<td>{{solicitud.id}}</td>
-							<td>{{solicitud.cajaSolicitada.nombre|default('ninguno')}}</td>
-							<td>{{solicitud.cajaSolicita.nombre|default('ninguno')}}</td>
-							<td>{{solicitud.userSolicita.name|default('ninguno')}}</td>
-							<td>{{solicitud.userAprueba.name|default('ninguno')}}</td>
-							<td>{{solicitud.status}}</td>
-							<td>{{solicitud.fecha|date('d-m-Y')}}</td>
-							<td>{{solicitud.monto}}</td>
+						<tr >
+							<td class="text-center" >{{solicitud.id}}</td>
+							<td class="text-center" >{{solicitud.cajaSolicitada.nombre|default('ninguno')}}</td>
+							<td class="text-center" >{{solicitud.cajaSolicita.nombre|default('ninguno')}}</td>
+							<td class="text-center" >{{solicitud.userSolicita.name|default('ninguno')}}</td>
+							<td class="text-center" >{{solicitud.userAprueba.name|default('ninguno')}}</td>
+							<td class="text-center" >{{solicitud.status}}</td>
+							<td class="text-center" >{{solicitud.fecha|date('d-m-Y')}}</td>
+							<td class="text-left text-bold">{{solicitud.monto|number_format(2,',','.')}} R$</td>
 							<td>
 							{% if (solicitud.status == 'pendiente' and solicitud.cajaSolicitada.id in misCajas ) or (app.user.rola == 'SUPER ADMIN' and solicitud.status == 'pendiente') %}
 								<a data-toggle="tooltip" data-placement="top" title="Rechazar" href="{{ path ('solicitudes_rechazar', {'id':solicitud.id})}}" class="btn btn-sm btn-danger m-r-5"><i class="fa fa-remove"></i></a>

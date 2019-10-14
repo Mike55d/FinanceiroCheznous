@@ -27,6 +27,7 @@ class DefaultController extends Controller
 			->findBy(['user'=>$user]);
 			$cajasResp = $em->getRepository('AppBundle:responsablesCaja')
 			->findBy(['user'=>$user,'responsable'=>1]);
+			$cajasResponsable = [];
 			foreach ($cajasResp as $caja) {
 				$cajasResponsable[]= $caja->getCaja()->getId();
 			}

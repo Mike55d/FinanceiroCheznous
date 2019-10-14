@@ -12,7 +12,9 @@
 				<div class="col-md-6">
 					<form method="post" id="userForm">
 						<label for="">Nombre de usuario</label>
-						<input required id="username" class="form-control m-b-5" name="username" type="text">
+						<div id="divUser">
+							<input required id="username" class="form-control m-b-5" name="username" type="text">
+						</div>
 						<div id="userMessage" style="display:none;"><p  class="text-danger">Nombre de usuario ya existente</p></div>
 						<label for="">Nombre</label>
 						<input required class="form-control m-b-5" name="nombre" type="text">
@@ -58,37 +60,58 @@
 $('#userForm').on('submit',function(event){
 });
 */
-$('#userForm').on('submit',function(event){
-	console.log('prevented');
-	event.preventDefault();
-});
-$('#send').click(function(){
-	console.log('clicked');
-	datos = 'username='+ $('#username').val();
-	$.ajax({
-		type:"POST",
-		url:"{{path ('users_valid')}}",
-		data:datos,
-		success:function(result){
-			if (result){
-				console.log('user correct');
-				$('#userMessage').hide();
-				if ($('#pw1').val() && $('#pw1').val() == $('#pw2').val()) {
-					console.log('pw correct');
-					$('#pwMessage').hide();
-					$('#userForm').unbind('submit');
-					$('#userForm').trigger('submit');
-					$('#send').unbind('click');
+
+$(document).ready(function(){
+		$( "#nombre" ).autocomplete({
+		source: availablePhones
+	});
+	$( "#direccion" ).autocomplete({
+		source: availableParents
+	});
+	$( "#cp" ).autocomplete({
+		source: availableBarrios
+	});
+	$( "#ce" ).autocomplete({
+		source: availableColegios
+	});
+	
+	var enviar = false;
+	$('#divUser').on('focusout',function(){
+		console.log('blue');
+		datos = 'username='+ $('#username').val();
+		$.ajax({
+			type:"POST",
+			url:"{{path ('users_valid')}}",
+			data:datos,
+			success:function(result){
+				if (result){
+					enviar = true;
+					$('#userMessage').hide();	
 				}else{
-					console.log('prevent');
-					$('#pwMessage').show();
-				}
+					enviar = false;
+					$('#userMessage').show();
+				}                           
+			}
+		});
+	})
+	$('#userForm').on('submit',function(event){
+
+		if (enviar) {
+			if ($('#pw1').val() == $('#pw2').val()) {
+				$('#pwMessage').hide();
+				$('#userForm').unbind('submit');
+				$('#userForm').submit();
 			}else{
-				$('#userMessage').show();
-			}                           
+				$('#pwMessage').show();
+				event.preventDefault();
+			}
+		}else{
+			event.preventDefault();
 		}
 	});
 });
+
+
 
 </script>
 {% endblock %}

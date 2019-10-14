@@ -18,7 +18,8 @@
 					<option></option>
 				</select><br>
 				<br>
-				<input name="monto" id="monto" required class="form-control input-lg" placeholder="0,00 R$" type="text"><br>
+				<input hidden type="text" id="monto2" name="monto">
+				<input  id="monto" required class="form-control input-lg" placeholder="0,00 R$" type="text"><br>
 				<button id="send" class="btn btn-primary center-block">Enviar</button><br>
 				<p id="montoMessage" style="display:none" class="text-danger">Saldo insuficiente</p>
 			</form>
@@ -91,7 +92,7 @@ $(document).ready(function(){
 			if (saldo - monto >= 0) {
 				$('#montoMessage').hide();
 				$('#formTransfer').unbind('submit');
-				$('#monto').val(monto);
+				$('#monto2').val(monto);
 				$('#formTransfer').trigger('submit');
 				$('#send').unbind('click');
 			}else{

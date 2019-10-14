@@ -1,6 +1,15 @@
 {% extends "::base.html.twig" %}
 
 {% block body %}
+{% for flash_message in app.session.flashBag.get('notice') %}
+<div class="row">
+	<div class="col-md-6 col-md-offset-3">
+		<div class="alert alert-success text-center" role="alert">
+			<h3 class="text-white">{{ flash_message }}</h3>
+		</div>
+	</div>
+</div>
+{% endfor %}
 <div class="row">
 	<div class="col-md-12">
 		<a href="{{ path ('cajas_new')}}" class="btn btn-primary m-b-5">Nuevo</a>
@@ -14,22 +23,22 @@
 							<th class="text-center" >Codigo</th>
 							<th class="text-center" >Nombre</th>
 							<th class="text-center" >Orden</th>
-							<th class="text-center" >Saldo</th>
+							<th class="text-left" >Saldo</th>
 							<th class="text-center" >Acciones</th>
 						</tr>
 					</thead>
 					<tbody>
 						{% for caja in cajas %}
-						<tr class="text-center">
-							<td>{{caja.id}}</td>
-							<td>{{caja.codigo|default('ninguno')}}</td>
-							<td>{{caja.nombre}}</td>
-							<td>{{caja.orden}}</td>
-							<td>{{caja.saldo}}</td>
-							<td>
+						<tr >
+							<td class="text-center" >{{caja.id}}</td>
+							<td class="text-center" >{{caja.codigo|default('ninguno')}}</td>
+							<td class="text-center" >{{caja.nombre}}</td>
+							<td class="text-center" >{{caja.orden}}</td>
+							<td class="text-left text-bold">{{caja.saldo|number_format(2,',','.')}} R$</td>
+							<td class="text-center" >
 								<a data-toggle="tooltip" data-placement="top" title="Editar" href="{{ path ('cajas_edit',{'id':caja.id})}}" class="btn btn-sm btn-warning "><i class="fa fa-pencil"></i></a>
 								<button onclick="del({{caja.id}},'{{caja.nombre}}')" data-toggle="tooltip" data-placement="top" title="Eliminar" class="btn btn-sm btn-danger "><i class="fa fa-remove"></i></button>
-								<a data-toggle="tooltip" data-placement="top" title="Fondear" class="btn btn-sm btn-success" href="{{path ('addSaldo',{'id':caja.id})}}"><i class="fa fa-plus"></i></a>
+								<a data-toggle="tooltip" data-placement="top" title="Agregar saldo" class="btn btn-sm btn-success" href="{{path ('addSaldo',{'id':caja.id})}}"><i class="fa fa-plus"></i></a>
 								<a data-toggle="tooltip" data-placement="top" title="Responsables" class="btn btn-sm btn-info" href="{{path ('responsables_index',{'id':caja.id})}}"><i class="fa fa-user"></i></a>
 								<a href="{{ path ('cajas_show',{'id':caja.id})}}" data-toggle="tooltip" data-placement="top" title="Detalles" href="#" class="btn btn-sm btn-primary"><i class="fa fa-eye"></i></a>
 							</td>

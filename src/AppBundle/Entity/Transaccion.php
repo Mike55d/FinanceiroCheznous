@@ -69,7 +69,7 @@ class Transaccion
     /**
      * @var float
      *
-     * @ORM\Column(name="monto", type="float")
+     * @ORM\Column(name="monto", type="float" , scale=2)
      */
     private $monto;
 

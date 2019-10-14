@@ -9,7 +9,7 @@
 <div class="row">
 	<div class="col-md-12">
 		<div class="white-box">
-			<div class="box-title">Editar Caja</div>
+			<div class="box-title">Editar Caja  <span class="text-danger">{{ caja.codigo}}</span></div>
 			<form method="post" >
 				<div class="row">
 					<div class="col-md-6">
@@ -41,7 +41,7 @@
 						<div style="display:none" id="contImage2" class="col-md-12 image"><img id="IMAGE" width="280" src="" /></div>
 						<div class="col-md-12 mb-10"><input class="form-control" id="file-input" type="file" /></div>
 						
-						<button class="btn btn-success center-block editarRegistro">Editar</button>
+						<button class="btn btn-success center-block editarRegistro">Actualizar</button>
 					</div>
 				</div>
 			</form>
@@ -143,8 +143,6 @@ var cropper = $image.data('cropper');
 
 {#
 <script>
-
-
 	$(document).ready(function(){
 		function formatState (state) {
 	console.log(state);
