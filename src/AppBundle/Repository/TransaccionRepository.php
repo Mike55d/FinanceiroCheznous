@@ -17,7 +17,7 @@ class TransaccionRepository extends \Doctrine\ORM\EntityRepository
 		$qb->select('t')
 		   ->from('AppBundle:Transaccion', 't')
 		   ->setMaxResults(10)
-		   ->orderBy('t.id', 'ASC');
+		   ->orderBy('t.id', 'DESC');
 	  $query = $qb->getQuery();
 	  return $query->getResult();
 	}
@@ -28,7 +28,8 @@ class TransaccionRepository extends \Doctrine\ORM\EntityRepository
 		$qb->select('c')
 		->from('AppBundle:Transaccion', 'c')
 		->where('c.cajaEnvia IN (:cajas) OR c.cajaRecibe IN (:cajas)')
-		->setParameter('cajas', $cajas);
+		->setParameter('cajas', $cajas)
+		->orderBy('c.id','DESC');
 		$query = $qb->getQuery();
 		return $query->getResult();
 	}

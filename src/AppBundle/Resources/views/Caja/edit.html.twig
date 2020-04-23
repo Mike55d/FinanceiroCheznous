@@ -6,6 +6,7 @@
 <link href="{{ asset ('ample/bower_components/cropper/cropper.min.css')}}" rel="stylesheet">
 {% endblock %}
 {% block body %}
+
 <div class="row">
 	<div class="col-md-12">
 		<div class="white-box">
@@ -21,6 +22,11 @@
 						<select class="form-control m-b-5" name="orden" id="">
 							<option value="I">I</option>
 							<option value="II">II</option>
+						</select>
+						<label for="">Tipo</label>
+						<select required class="form-control m-b-5" name="tipo" id="">
+							<option value="central">Central</option>
+							<option value="filial">Filial</option>
 						</select>
 						<label for="">Codigo Postal</label>
 						<input type="text" class="form-control m-b-5" value="{{caja.cp}}" name="cp">
@@ -40,7 +46,12 @@
 						<div id="contImage1" class="col-md-12 image"><img id="imgSalida" height="250" src="{{ asset ('img/allImg/'~caja.image)}}" /></div>
 						<div style="display:none" id="contImage2" class="col-md-12 image"><img id="IMAGE" width="280" src="" /></div>
 						<div class="col-md-12 mb-10"><input class="form-control" id="file-input" type="file" /></div>
-						
+						<label for="">Asociaciones</label>
+						<select id="asociaciones" required class="form-control m-b-5" multiple="true" name="asociaciones[]" id="">
+							{% for asociacion in asociaciones  %}
+								<option {% if asociacion in asociacionesCaja %}selected{% endif %} value="{{asociacion.id}}">{{asociacion.nombre}}  {{asociacion.codigo}}</option>
+							{% endfor %}
+						</select><br><br>
 						<button class="btn btn-success center-block editarRegistro">Actualizar</button>
 					</div>
 				</div>
@@ -56,6 +67,8 @@
 <script src="{{ asset ('ample/bower_components/cropper/cropper.min.js')}}"></script>
 <script>
 $(function(){
+	
+	$('#asociaciones').select2();
 
 	$('#file-input').change(function(){
 		$('#contImage1').hide();

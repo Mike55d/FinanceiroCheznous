@@ -27,6 +27,11 @@
 							<option value="I">I</option>
 							<option value="II">II</option>
 						</select>
+						<label for="">Tipo</label>
+						<select required class="form-control m-b-5" name="tipo" id="">
+							<option value="central">Central</option>
+							<option value="filial">Filial</option>
+						</select>
 						<label for="">Codigo Postal</label>
 						<input id="cp" required type="text" class="form-control m-b-5" name="cp">
 						<input id="imageUrl" name="image" type="hidden">
@@ -36,6 +41,13 @@
 					<div class="col-md-6">
 						<div class="col-md-12 image"><img id="IMAGE" width="280" src="" /></div>
 						<div class="col-md-12 mb-10"><input class="form-control" id="file-input" type="file" /></div>
+
+						<label for="">Asociaciones</label>
+						<select id="asociaciones" required class="form-control m-b-5" multiple="true" name="asociaciones[]" id="">
+							{% for asociacion in asociaciones %}
+								<option value="{{asociacion.id}}">{{asociacion.nombre}}  {{asociacion.codigo}}</option>
+							{% endfor %}
+						</select>
 						<label for="">Saldo</label>
 						<input hidden id="saldo2" name="saldo" type="text">
 						<input id="saldo" required type="text"  min="0" placeholder="0,00 R$" class="form-control m-b-5 input-lg"><br>
@@ -55,18 +67,9 @@
 <script src="{{ asset ('ample/bower_components/cropper/cropper.min.js')}}"></script>
 <script>
 $(document).ready(function(){
-	$( "#nombre" ).autocomplete({
-		source: availablePhones
-	});
-	$( "#direccion" ).autocomplete({
-		source: availableParents
-	});
-	$( "#cp" ).autocomplete({
-		source: availableBarrios
-	});
-	$( "#ce" ).autocomplete({
-		source: availableColegios
-	});
+
+
+	$('#asociaciones').select2();
 
 	$("#saldo").maskMoney({thousands:'.', decimal:',', allowZero: true, suffix: ' R$'});
 	var enviar = false;

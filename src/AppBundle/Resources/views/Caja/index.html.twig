@@ -1,25 +1,15 @@
 {% extends "::base.html.twig" %}
 
 {% block body %}
-{% for flash_message in app.session.flashBag.get('notice') %}
-<div class="row">
-	<div class="col-md-6 col-md-offset-3">
-		<div class="alert alert-success text-center" role="alert">
-			<h3 class="text-white">{{ flash_message }}</h3>
-		</div>
-	</div>
-</div>
-{% endfor %}
 <div class="row">
 	<div class="col-md-12">
 		<a href="{{ path ('cajas_new')}}" class="btn btn-primary m-b-5">Nuevo</a>
 		<div class="white-box">
 			<div class="box-title">Cajas</div>
 			<div class="table-responsive">
-				<table id="cajas" class="table table-striped">
+				<table id="cajas" class="table table-striped table-hover">
 					<thead>
 						<tr>
-							<th class="text-center" >Id</th>
 							<th class="text-center" >Codigo</th>
 							<th class="text-center" >Nombre</th>
 							<th class="text-center" >Orden</th>
@@ -30,7 +20,6 @@
 					<tbody>
 						{% for caja in cajas %}
 						<tr >
-							<td class="text-center" >{{caja.id}}</td>
 							<td class="text-center" >{{caja.codigo|default('ninguno')}}</td>
 							<td class="text-center" >{{caja.nombre}}</td>
 							<td class="text-center" >{{caja.orden}}</td>
@@ -83,6 +72,16 @@
 	$('#nameUser').text(name);
 	$('#btn-del').attr('href',`${id}/del`)
 }
-    	$('#cajas').DataTable();
+	var a = 0
+$('#btn-del').click(function(){
+	console.log(a)
+	if (a) {
+	$(this).removeAttr('href');
+	}
+	a++;
+})
+    	$('#cajas').DataTable({
+    		"ordering": false
+    	});
     </script>
 {% endblock %}

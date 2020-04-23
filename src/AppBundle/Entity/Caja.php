@@ -52,6 +52,48 @@ class Caja
     /**
      * @var string
      *
+     * @ORM\Column(name="localidad", type="string", length=255 , nullable=true)
+     */
+    private $localidad;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="calle", type="string", length=255 , nullable=true)
+     */
+    private $calle;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="nCalle", type="string", length=255 , nullable=true)
+     */
+    private $nCalle;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="barrio", type="string", length=255 , nullable=true)
+     */
+    private $barrio;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="ciudad", type="string", length=255 , nullable=true)
+     */
+    private $ciudad;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="uf", type="string", length=255 , nullable=true)
+     */
+    private $uf;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="orden", type="string" , length=255)
      */
     private $orden;
@@ -76,6 +118,13 @@ class Caja
      * @ORM\Column(name="ce", type="string", length=255 , nullable=true)
      */
     private $ce;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="tipo", type="string", length=255 )
+     */
+    private $tipo;
 
 
     /**
@@ -312,5 +361,173 @@ class Caja
     public function getSaldo()
     {
         return $this->saldo;
+    }
+
+    /**
+     * Set localidad
+     *
+     * @param string $localidad
+     *
+     * @return Caja
+     */
+    public function setLocalidad($localidad)
+    {
+        $this->localidad = $localidad;
+
+        return $this;
+    }
+
+    /**
+     * Get localidad
+     *
+     * @return string
+     */
+    public function getLocalidad()
+    {
+        return $this->localidad;
+    }
+
+    /**
+     * Set calle
+     *
+     * @param string $calle
+     *
+     * @return Caja
+     */
+    public function setCalle($calle)
+    {
+        $this->calle = $calle;
+
+        return $this;
+    }
+
+    /**
+     * Get calle
+     *
+     * @return string
+     */
+    public function getCalle()
+    {
+        return $this->calle;
+    }
+
+    /**
+     * Set nCalle
+     *
+     * @param string $nCalle
+     *
+     * @return Caja
+     */
+    public function setNCalle($nCalle)
+    {
+        $this->nCalle = $nCalle;
+
+        return $this;
+    }
+
+    /**
+     * Get nCalle
+     *
+     * @return string
+     */
+    public function getNCalle()
+    {
+        return $this->nCalle;
+    }
+
+    /**
+     * Set barrio
+     *
+     * @param string $barrio
+     *
+     * @return Caja
+     */
+    public function setBarrio($barrio)
+    {
+        $this->barrio = $barrio;
+
+        return $this;
+    }
+
+    /**
+     * Get barrio
+     *
+     * @return string
+     */
+    public function getBarrio()
+    {
+        return $this->barrio;
+    }
+
+    /**
+     * Set ciudad
+     *
+     * @param string $ciudad
+     *
+     * @return Caja
+     */
+    public function setCiudad($ciudad)
+    {
+        $this->ciudad = $ciudad;
+
+        return $this;
+    }
+
+    /**
+     * Get ciudad
+     *
+     * @return string
+     */
+    public function getCiudad()
+    {
+        return $this->ciudad;
+    }
+
+    /**
+     * Set uf
+     *
+     * @param string $uf
+     *
+     * @return Caja
+     */
+    public function setUf($uf)
+    {
+        $this->uf = $uf;
+
+        return $this;
+    }
+
+    /**
+     * Get uf
+     *
+     * @return string
+     */
+    public function getUf()
+    {
+        return $this->uf;
+    }
+
+    /**
+     * Set tipo
+     *
+     * @param string $tipo
+     *
+     * @return Caja
+     */
+    public function setTipo($tipo)
+    {
+        $this->tipo = $tipo;
+
+        return $this;
+    }
+
+    /**
+     * Get tipo
+     *
+     * @return string
+     */
+    public function getTipo()
+    {
+        return $this->tipo;
     }
 }

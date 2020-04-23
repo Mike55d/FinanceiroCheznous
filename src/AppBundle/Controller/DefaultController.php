@@ -5,6 +5,7 @@ namespace AppBundle\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use AppBundle\Entity\Caja;
 
 class DefaultController extends Controller
 {
@@ -14,8 +15,40 @@ class DefaultController extends Controller
 	public function indexAction(Request $request)
 	{
 		$em =$this->getDoctrine()->getManager(); 
+		$google = new \Google_Client();
+		$google->setApplicationname('google sheets and php');
+		$google->setScopes([\Google_Service_Sheets::SPREADSHEETS]);
+		$google->setAccessType('offline');
+		$google->setAuthConfig(__DIR__.'/../../../web/google/credentials.json');
+		$service = new \Google_Service_Sheets($google);
+		$spreadSheetId = "1l274qdHVj3_beytyT-s-ZbE8pSuwao6qnUq7DgIhnIY";
+		$range = "Hoja 1!A2:I";
+		$response = $service->spreadsheets_values->get($spreadSheetId,$range);
+		$values = $response->getValues();
+		/*
+		foreach ($values as $val) {
+			$caja  = new Caja;
+			$caja->setCodigo($val[0]);
+			$caja->setNombre($val[1]);
+			$caja->setLocalidad($val[2]);
+			$caja->setCalle($val[3]);
+			$caja->setNCalle($val[4]);
+			$caja->setBarrio($val[5]);
+			$caja->setCiudad($val[6]);
+			$caja->setUf($val[7]);
+			$caja->setCe($val[8]);
+			$caja->setDireccion('ninguna');
+			$caja->setOrden('I');
+			$caja->setCp(null);
+			$caja->setSaldo(0);
+			$caja->setImage('default_box.png');
+			$caja->setDescripcion('ninguna');
+			$em->persist($caja);
+			$em->flush();
+		}
+		*/
 		$user = $this->get('security.token_storage')
-    ->getToken()->getUser(); 
+		->getToken()->getUser(); 
 		$misCajas = $em->getRepository('AppBundle:responsablesCaja')
 		->findByUser($user->getId());
 		$total = 0;
@@ -47,7 +80,8 @@ class DefaultController extends Controller
 			'transacciones' => $transacciones,
 			'cajas'=>$cajas,
 			'users'=>$users,
-			'pendientes'=>$pendientes
+			'pendientes'=>$pendientes,
+			'values'=> $values,
 		]);
 	}
 

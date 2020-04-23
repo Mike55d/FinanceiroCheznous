@@ -21,7 +21,7 @@ class UsersController extends Controller
         $em =$this->getDoctrine()->getManager(); 
         $user = $this->get('security.token_storage')
         ->getToken()->getUser(); 
-        $users = $em->getRepository('AppBundle:User')->findAll(); 
+        $users = $em->getRepository('AppBundle:User')->findUsers(); 
         return $this->render('AppBundle:Users:index.html.twig', array(
             'users'=>$users
         ));
@@ -105,12 +105,12 @@ class UsersController extends Controller
     public function delAction(User $user , Request $request)
     {
         $em =$this->getDoctrine()->getManager(); 
-        $em->remove($user);
-        $em->flush();
         $this->addFlash(
                 'notice',
                 'Usuario '.$user->getName().' eliminado correctamente'
             );
+        $em->remove($user);
+        $em->flush();
         return $this->redirectToRoute('users_index');
     }
 

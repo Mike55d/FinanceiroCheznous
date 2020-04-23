@@ -30,25 +30,25 @@ class Solicitud
 
     /**
     * @ORM\ManyToOne(targetEntity="Caja")
-    * @ORM\JoinColumn(name="caja_solicita", referencedColumnName="id")
+    * @ORM\JoinColumn(name="caja_solicita", referencedColumnName="id" , onDelete="SET NULL")
     */
     private $cajaSolicita;
 
     /**
     * @ORM\ManyToOne(targetEntity="Caja")
-    * @ORM\JoinColumn(name="caja_solicitada", referencedColumnName="id")
+    * @ORM\JoinColumn(name="caja_solicitada", referencedColumnName="id" , onDelete="SET NULL")
     */
     private $cajaSolicitada;
 
     /**
     * @ORM\ManyToOne(targetEntity="User")
-    * @ORM\JoinColumn(name="user_solicita", referencedColumnName="id" , nullable=true)
+    * @ORM\JoinColumn(name="user_solicita", referencedColumnName="id" , nullable=true , onDelete="SET NULL")
     */
     private $userSolicita;
 
     /**
     * @ORM\ManyToOne(targetEntity="User")
-    * @ORM\JoinColumn(name="user_aprueba", referencedColumnName="id" , nullable=true)
+    * @ORM\JoinColumn(name="user_aprueba", referencedColumnName="id" , nullable=true , onDelete="SET NULL")
     */
     private $userAprueba;
 

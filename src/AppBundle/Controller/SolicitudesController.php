@@ -170,7 +170,7 @@ use AppBundle\Entity\Transaccion;
             $em->flush();
             $this->addFlash(
                 'notice',
-                'Solicitud enviada'
+                'Solicitud enviada a '.$cajaSolicitada->getNombre().' por '.$request->get('monto').' R$'
             );
             return $this->redirectToRoute('solicitudes_index');
         }

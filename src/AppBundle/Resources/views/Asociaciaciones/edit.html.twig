@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+<div class="row">
+	<div class="col-md-6 col-md-offset-3">
+		<div class="white-box">
+			<h1 class="font-bold">Editar Asociacion</h1>
+			<form action="">
+				<label for="">Nombre</label>
+				<input type="text" name="nombre" value="{{asociacion.nombre}}" class="form-control">
+				<label for="">Codigo</label>
+				<input type="text" name="codigo" value="{{asociacion.codigo}}" class="form-control">
+				<br>
+				<button class="btn btn-success">Guardar</button>
+			</form>
+		</div>
+	</div>
+</div>
+{% endblock %}

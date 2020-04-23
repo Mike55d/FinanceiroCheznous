@@ -1,0 +1,82 @@
+{% extends "::base.html.twig" %}
+
+{% block body %}
+<div class="row">
+	<div class="col-md-12">
+		<a href="{{ path ('asociaciones_new')}}" class="btn btn-primary m-b-5">Nueva</a>
+		<div class="white-box">
+			<div class="box-title">Asociaciones</div>
+			<div class="table-responsive">
+				<table id="asociaciones" class="table table-striped table-hover">
+					<thead>
+						<tr>
+							<th class="text-center" >Id</th>
+							<th class="text-center" >Nombre</th>
+							<th class="text-center" >Codigo</th>
+							<th class="text-center" >Acciones</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for asociacion in asociaciones %}
+						<tr >
+							<td class="text-center" >{{asociacion.id}}</td>
+							<td class="text-center" >{{asociacion.nombre}}</td>
+							<td class="text-center" >{{asociacion.codigo}}</td>
+							<td class="text-center" >
+								<a data-toggle="tooltip" data-placement="top" title="Editar" href="{{ path ('asociaciones_edit',{'id':asociacion.id})}}" class="btn btn-sm btn-warning "><i class="fa fa-pencil"></i></a>
+								<button onclick="del({{asociacion.id}},'{{asociacion.nombre}}')" data-toggle="tooltip" data-placement="top" title="Eliminar" class="btn btn-sm btn-danger "><i class="fa fa-remove"></i></button>
+							</td>
+						</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="col-md-4">
+	<!-- sample modal content -->
+	<div class="modal fade " id="delasociacion" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" style="display: none;">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+					<h4 class="modal-title" id="mySmallModalLabel"></h4>Eliminar asociacion</div>
+					<div class="modal-body text-center"><p>
+						Seguro que quieres 
+						eliminar esta asociacion ?
+					</p>
+					<h6 id="nameUser"></h6>
+				</div>
+				<div class="modal-footer">
+					<a href="" id="btn-del" class="btn btn-danger">Eliminar</a>
+				</div>
+			</div>
+			<!-- /.modal-content -->
+		</div>
+		<!-- /.modal-dialog -->
+	</div>
+	<!-- /.modal -->
+</div>
+{% endblock %}
+
+{% block javascripts %}
+<script>
+function del(id , name){
+	$('#delasociacion').modal('toggle');
+	$('#nameUser').text(name);
+	$('#btn-del').attr('href',`${id}/del`)
+}
+var a = 0
+$('#btn-del').click(function(){
+	console.log(a)
+	if (a) {
+		$(this).removeAttr('href');
+	}
+	a++;
+})
+$('#asociaciones').DataTable({
+	"ordering": false
+});
+</script>
+{% endblock %}

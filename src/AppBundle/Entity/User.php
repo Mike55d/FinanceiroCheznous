@@ -125,12 +125,6 @@ class User implements AdvancedUserInterface
 
 
     /**
-    * @ORM\ManyToOne(targetEntity="Caja")
-    * @ORM\JoinColumn(name="caja", referencedColumnName="id" , nullable=true)
-    */
-    private $caja;
-
-    /**
      * @var string
      *
      * @ORM\Column(name="pw", type="string", length=255 , nullable=true)
@@ -377,31 +371,6 @@ public function isAccountNonExpired()
     {
         return $this->rola;
     }
-
-    /**
-     * Set caja
-     *
-     * @param \AppBundle\Entity\Caja $caja
-     *
-     * @return User
-     */
-    public function setCaja(\AppBundle\Entity\Caja $caja = null)
-    {
-        $this->caja = $caja;
-
-        return $this;
-    }
-
-    /**
-     * Get caja
-     *
-     * @return \AppBundle\Entity\Caja
-     */
-    public function getCaja()
-    {
-        return $this->caja;
-    }
-
  
 
     /**

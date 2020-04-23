@@ -1,0 +1,48 @@
+<?php
+
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * AsociacionesCaja
+ *
+ * @ORM\Table(name="asociaciones_caja")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\AsociacionesCajaRepository")
+ */
+class AsociacionesCaja
+{
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+
+    /**
+    * @ORM\ManyToOne(targetEntity="Caja")
+    * @ORM\JoinColumn(name="caja", referencedColumnName="id")
+    */
+    private $caja;
+
+
+    /**
+    * @ORM\ManyToOne(targetEntity="Asociacion")
+    * @ORM\JoinColumn(name="asociacion", referencedColumnName="id")
+    */
+    private $asociacion;
+
+    /**
+     * Get id
+     *
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+}
+

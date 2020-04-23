@@ -1,28 +1,19 @@
 {% extends "::base.html.twig" %}
 
 {% block body %}
-{% for flash_message in app.session.flashBag.get('notice') %}
-<div class="row">
-	<div class="col-md-6 col-md-offset-3">
-		<div class="alert alert-success text-center" role="alert">
-			<h3 class="text-white">{{ flash_message }}</h3>
-		</div>
-	</div>
-</div>
-{% endfor %}
 <div class="row">
 	<div class="col-md-12">
 		<div class="white-box">
 			<div class="box-title">Solicitudes</div>
 			<div class="table-responsive">
-				<table id="tabla" class="table table-striped">
+				<table id="tabla" class="table table-striped table-hover">
 					<thead>
 						<tr>
 							<th class="text-center">Id</th>
-							<th class="text-center">Caja solicitada</th>
-							<th class="text-center">Caja que solicita</th>
-							<th class="text-center">Usuario que solicita</th>
-							<th class="text-center">Usuario que aprueba</th>
+							<th class="text-center">Caja Solicitada</th>
+							<th class="text-center">Caja que Solicita</th>
+							<th class="text-center">Usuario que Solicita</th>
+							<th class="text-center">Usuario que Aprueba</th>
 							<th class="text-center">Status</th>
 							<th class="text-center">Fecha</th>
 							<th class="text-left">Monto</th>
@@ -58,6 +49,8 @@
 
 {% block javascripts %}
 <script>
-$('#tabla').DataTable();
+$('#tabla').DataTable({
+	"order": [[ 0, "desc" ]]
+});
 </script>
 {% endblock %}

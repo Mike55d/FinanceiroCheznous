@@ -77,3 +77,8 @@ span.select2-container{
 	font-size: 15px;
 	font-weight: bold;
 }
+
+.table-hover>tbody>tr:hover{
+	background-color: #719192 !important;
+	color: white;
+}

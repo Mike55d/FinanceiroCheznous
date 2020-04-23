@@ -1,14 +1,6 @@
 {% extends 'base.html.twig' %}
 {% block body %}
-{% for flash_message in app.session.flashBag.get('notice') %}
-<div class="row">
-    <div class="col-md-12">
-        <div class="alert alert-success" role="alert">
-            <h6>{{ flash_message }}</h6>
-        </div>
-    </div>
-</div>
-{% endfor %}
+
 <div class="row">
     <div class="col-md-12">
         <div class="white-box">
@@ -98,14 +90,14 @@
             <div class="white-box">
                 <h3 class="box-title text-center">Movimientos recientes</h3>
                 <div class="table-responsive">
-                    <table class="table">
+                    <table class="table table-striped table-hover">
                         <thead>
                             <tr>
-                                <th>id</th>
-                                <th>Cja envia</th>
-                                <th>Cja recice</th>
-                                <th>tipo</th>
-                                <th>fecha</th>
+                                <th>Id</th>
+                                <th>Caja Envia</th>
+                                <th>Caja Recibe</th>
+                                <th>Tipo</th>
+                                <th>Fecha</th>
                                 <th>Monto</th>
                             </tr>
                         </thead>

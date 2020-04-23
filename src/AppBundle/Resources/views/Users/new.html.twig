@@ -62,18 +62,6 @@ $('#userForm').on('submit',function(event){
 */
 
 $(document).ready(function(){
-		$( "#nombre" ).autocomplete({
-		source: availablePhones
-	});
-	$( "#direccion" ).autocomplete({
-		source: availableParents
-	});
-	$( "#cp" ).autocomplete({
-		source: availableBarrios
-	});
-	$( "#ce" ).autocomplete({
-		source: availableColegios
-	});
 	
 	var enviar = false;
 	$('#divUser').on('focusout',function(){
