@@ -6,7 +6,12 @@
 		<div class="white-box">
 			<div class="box-title">Editar Codigo</div>
 			<form method="post" >
+				<label for="">Numero</label>
+				<input class="form-control" value="{{codigo.nro}}" type="text" name="nro"><br>
+				<label for="">Descripcion</label>
 				<input class="form-control" value="{{codigo.descripcion}}" type="text" name="descripcion"><br>
+				<label for="">Iniciales</label>
+				<input class="form-control" value="{{codigo.iniciales}}" type="text" name="iniciales"><br>
 				<button class="btn btn-success center-block">Editar</button>
 			</form>
 		</div>

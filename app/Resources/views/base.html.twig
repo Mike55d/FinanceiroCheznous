@@ -2,9 +2,8 @@
 <html>
 <head>
     <meta charset="UTF-8" />
-    <title>{% block title %}App Blue{% endblock %}</title>
+    <title>{% block title %}Financeiro{% endblock %}</title>
     {% block stylesheets %}{% endblock %}
-    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset ('ample/images/favicon.png')}}">
     <!-- Bootstrap Core CSS -->
     <link href="{{ asset ('ample/bootstrap/dist/css/bootstrap.min.css')}}" rel="stylesheet">
     <!-- Menu CSS -->
@@ -94,18 +93,24 @@
                     <li> <a href="{{ path ('transferencias')}}" class="waves-effect"><i class="mdi mdi-clipboard-check fa-fw"></i><span class="hide-menu">Transacciones</span></a> </li>
                     {% if app.user.rola != 'SUPER ADMIN' %}
                         <li> <a href="{{ path ('solicitudes_new')}}" class="waves-effect"><i class="mdi mdi-google-maps fa-fw"></i><span class="hide-menu">Solicitar</span></a> </li>
+                        <li> <a href="{{ path ('misCajas')}}" class="waves-effect"><i class="mdi mdi-cube-send fa-fw"></i> <span class="hide-menu">Mis cajas</span></a></li>
                     {% endif %}
+
                     <li> <a href="#" class="waves-effect"><i class="mdi mdi-file-document-box fa-fw" data-icon="v"></i> <span class="hide-menu"> Solicitudes <span class="fa arrow"></span> </span></a>
                         <ul class="nav nav-second-level">
                             <li> <a href="{{path ('solicitudes_index')}}"><i class=" fa-fw"></i><span class="hide-menu">Todas </span></a> </li>
+                            {#
                             <li> <a href="{{path ('solicitudes_pendientes')}}"><i class=" fa-fw"></i><span class="hide-menu">Pendientes </span></a> </li>
                             <li> <a href="{{path ('solicitudes_aprobadas')}}"><i class=" fa-fw"></i><span class="hide-menu">Aprobadas </span></a> </li>
                             <li> <a href="{{path ('solicitudes_rechazadas')}}"><i class=" fa-fw"></i><span class="hide-menu">Rechazadas</span></a> </li>
+                            #}
                         </ul>
                     </li>
                     {% if app.user.rola == 'SUPER ADMIN' %}
                     <li> <a href="{{ path ('cajas_index')}}" class="waves-effect"><i class="mdi mdi-cube-send fa-fw"></i> <span class="hide-menu">Cajas</span></a></li>
-                    <li> <a href="{{ path ('asociaciones_index')}}" class="waves-effect"><i class="mdi mdi-cube-send fa-fw"></i> <span class="hide-menu">Asociaciones</span></a></li>
+                    <li> <a href="{{ path ('asociaciones_index')}}" class="waves-effect"><i class="mdi mdi-account-card-details fa-fw"></i> <span class="hide-menu">Asociaciones</span></a></li>
+                    <li> <a href="{{ path ('codigos_index')}}" class="waves-effect"><i class="mdi mdi-airplay fa-fw"></i> <span class="hide-menu">Codigos</span></a></li>
+                    <li> <a href="{{ path ('fuentes_index')}}" class="waves-effect"><i class="mdi mdi-book fa-fw"></i> <span class="hide-menu">Fuentes</span></a></li>
                     {#
                     <li> <a href="{{ path ('codigos_index')}}" class="waves-effect"><i class="mdi mdi-calendar-check fa-fw"></i> <span class="hide-menu">Codigos</span></a></li>
                     #}

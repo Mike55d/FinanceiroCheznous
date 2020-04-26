@@ -24,9 +24,24 @@ class Codigo
     /**
      * @var string
      *
+     * @ORM\Column(name="nro", type="string", length=255)
+     */
+    private $nro;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="descripcion", type="string", length=255)
      */
     private $descripcion;
+
+   
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="iniciales", type="string", length=255)
+     */
+    private $iniciales;
 
 
 
@@ -64,4 +79,52 @@ class Codigo
         return $this->descripcion;
     }
 
+
+    /**
+     * Set nro
+     *
+     * @param string $nro
+     *
+     * @return Codigo
+     */
+    public function setNro($nro)
+    {
+        $this->nro = $nro;
+
+        return $this;
+    }
+
+    /**
+     * Get nro
+     *
+     * @return string
+     */
+    public function getNro()
+    {
+        return $this->nro;
+    }
+
+    /**
+     * Set iniciales
+     *
+     * @param string $iniciales
+     *
+     * @return Codigo
+     */
+    public function setIniciales($iniciales)
+    {
+        $this->iniciales = $iniciales;
+
+        return $this;
+    }
+
+    /**
+     * Get iniciales
+     *
+     * @return string
+     */
+    public function getIniciales()
+    {
+        return $this->iniciales;
+    }
 }

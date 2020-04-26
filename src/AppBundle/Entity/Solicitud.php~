@@ -30,25 +30,25 @@ class Solicitud
 
     /**
     * @ORM\ManyToOne(targetEntity="Caja")
-    * @ORM\JoinColumn(name="caja_solicita", referencedColumnName="id")
+    * @ORM\JoinColumn(name="caja_solicita", referencedColumnName="id" , onDelete="SET NULL")
     */
     private $cajaSolicita;
 
     /**
     * @ORM\ManyToOne(targetEntity="Caja")
-    * @ORM\JoinColumn(name="caja_solicitada", referencedColumnName="id")
+    * @ORM\JoinColumn(name="caja_solicitada", referencedColumnName="id" , onDelete="SET NULL")
     */
     private $cajaSolicitada;
 
     /**
     * @ORM\ManyToOne(targetEntity="User")
-    * @ORM\JoinColumn(name="user_solicita", referencedColumnName="id" , nullable=true)
+    * @ORM\JoinColumn(name="user_solicita", referencedColumnName="id" , nullable=true , onDelete="SET NULL")
     */
     private $userSolicita;
 
     /**
     * @ORM\ManyToOne(targetEntity="User")
-    * @ORM\JoinColumn(name="user_aprueba", referencedColumnName="id" , nullable=true)
+    * @ORM\JoinColumn(name="user_aprueba", referencedColumnName="id" , nullable=true , onDelete="SET NULL")
     */
     private $userAprueba;
 
@@ -60,11 +60,31 @@ class Solicitud
     private $fecha;
 
     /**
-     * @var integer
+     * @var float
      *
-     * @ORM\Column(name="monto", type="integer")
+     * @ORM\Column(name="monto", type="float" , scale=2)
      */
     private $monto;
+
+    /**
+    * @ORM\ManyToOne(targetEntity="Asociacion")
+    * @ORM\JoinColumn(name="asociacion", referencedColumnName="id")
+    */
+
+    private $asociacion;
+
+    /**
+    * @ORM\ManyToOne(targetEntity="Codigo")
+    * @ORM\JoinColumn(name="codigo", referencedColumnName="id")
+    */
+
+    private $codigo;
+
+    /**
+    * @ORM\ManyToOne(targetEntity="Fuente")
+    * @ORM\JoinColumn(name="fuente", referencedColumnName="id")
+    */
+    private $fuente;
 
 
     /**
@@ -220,4 +240,77 @@ class Solicitud
     {
         return $this->fecha;
     }
+
+    /**
+     * Set monto
+     *
+     * @param integer $monto
+     *
+     * @return Solicitud
+     */
+    public function setMonto($monto)
+    {
+        $this->monto = $monto;
+
+        return $this;
+    }
+
+    /**
+     * Get monto
+     *
+     * @return integer
+     */
+    public function getMonto()
+    {
+        return $this->monto;
+    }
+
+    /**
+     * Set asociacion
+     *
+     * @param \AppBundle\Entity\Asociacion $asociacion
+     *
+     * @return Solicitud
+     */
+    public function setAsociacion(\AppBundle\Entity\Asociacion $asociacion = null)
+    {
+        $this->asociacion = $asociacion;
+
+        return $this;
+    }
+
+    /**
+     * Get asociacion
+     *
+     * @return \AppBundle\Entity\Asociacion
+     */
+    public function getAsociacion()
+    {
+        return $this->asociacion;
+    }
+
+    /**
+     * Set codigo
+     *
+     * @param \AppBundle\Entity\Codigo $codigo
+     *
+     * @return Solicitud
+     */
+    public function setCodigo(\AppBundle\Entity\Codigo $codigo = null)
+    {
+        $this->codigo = $codigo;
+
+        return $this;
+    }
+
+    /**
+     * Get codigo
+     *
+     * @return \AppBundle\Entity\Codigo
+     */
+    public function getCodigo()
+    {
+        return $this->codigo;
+    }
+
 }

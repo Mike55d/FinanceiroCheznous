@@ -1,0 +1,16 @@
+{% extends "::base.html.twig" %}
+
+{% block body %}
+<div class="row">
+	<div class="col-md-6 col-md-offset-3">
+		<div class="white-box">
+			<div class="box-title">Nueva Fuente</div>
+			<form method="post" >
+				<label for="">Nombre</label>
+				<input class="form-control" type="text" name="nombre"><br>
+				<button class="btn btn-success center-block">Crear</button>
+			</form>
+		</div>
+	</div>
+</div>
+{% endblock %}

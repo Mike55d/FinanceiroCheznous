@@ -73,6 +73,26 @@ class Transaccion
      */
     private $monto;
 
+     /**
+    * @ORM\ManyToOne(targetEntity="Asociacion")
+    * @ORM\JoinColumn(name="asociacion", referencedColumnName="id")
+    */
+
+    private $asociacion;
+
+    /**
+    * @ORM\ManyToOne(targetEntity="Codigo")
+    * @ORM\JoinColumn(name="codigo", referencedColumnName="id")
+    */
+
+    private $codigo;
+
+    /**
+    * @ORM\ManyToOne(targetEntity="Fuente")
+    * @ORM\JoinColumn(name="fuente", referencedColumnName="id")
+    */
+    private $fuente;
+
 
     /**
      * Get id
@@ -274,5 +294,79 @@ class Transaccion
     public function getUserSolicita()
     {
         return $this->userSolicita;
+    }
+
+    /**
+     * Set asociacion
+     *
+     * @param \AppBundle\Entity\Asociacion $asociacion
+     *
+     * @return Transaccion
+     */
+    public function setAsociacion(\AppBundle\Entity\Asociacion $asociacion = null)
+    {
+        $this->asociacion = $asociacion;
+
+        return $this;
+    }
+
+    /**
+     * Get asociacion
+     *
+     * @return \AppBundle\Entity\Asociacion
+     */
+    public function getAsociacion()
+    {
+        return $this->asociacion;
+    }
+
+    /**
+     * Set codigo
+     *
+     * @param \AppBundle\Entity\Codigo $codigo
+     *
+     * @return Transaccion
+     */
+    public function setCodigo(\AppBundle\Entity\Codigo $codigo = null)
+    {
+        $this->codigo = $codigo;
+
+        return $this;
+    }
+
+    /**
+     * Get codigo
+     *
+     * @return \AppBundle\Entity\Codigo
+     */
+    public function getCodigo()
+    {
+        return $this->codigo;
+    }
+
+
+
+    /**
+     * Set fuente
+     *
+     * @param \AppBundle\Entity\Fuente $fuente
+     *
+     * @return Transaccion
+     */
+    public function setFuente(\AppBundle\Entity\Fuente $fuente = null)
+    {
+        $this->fuente = $fuente;
+
+        return $this;
+    }
+
+    /**
+     * Get fuente
+     *
+     * @return \AppBundle\Entity\Fuente
+     */
+    public function getFuente()
+    {
+        return $this->fuente;
     }
 }

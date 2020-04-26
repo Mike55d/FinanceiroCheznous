@@ -135,6 +135,21 @@ class Caja
     private $saldo;
 
 
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="activa", type="boolean" )
+     */
+    private $activa;
+
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="negativo", type="boolean" )
+     */
+    private $negativo;
+
+
   
 
     /**
@@ -529,5 +544,53 @@ class Caja
     public function getTipo()
     {
         return $this->tipo;
+    }
+
+    /**
+     * Set activa
+     *
+     * @param boolean $activa
+     *
+     * @return Caja
+     */
+    public function setActiva($activa)
+    {
+        $this->activa = $activa;
+
+        return $this;
+    }
+
+    /**
+     * Get activa
+     *
+     * @return boolean
+     */
+    public function getActiva()
+    {
+        return $this->activa;
+    }
+
+    /**
+     * Set negativo
+     *
+     * @param boolean $negativo
+     *
+     * @return Caja
+     */
+    public function setNegativo($negativo)
+    {
+        $this->negativo = $negativo;
+
+        return $this;
+    }
+
+    /**
+     * Get negativo
+     *
+     * @return boolean
+     */
+    public function getNegativo()
+    {
+        return $this->negativo;
     }
 }

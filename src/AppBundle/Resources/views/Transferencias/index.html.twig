@@ -13,6 +13,9 @@
 							<th class="text-center">Caja que envia</th>
 							<th class="text-center">Caja que recibe</th>
 							<th class="text-center">Tipo</th>
+							<th class="text-center">Asociacion</th>
+							<th class="text-center">Codigo</th>
+							<th class="text-center">Fuente</th>
 							<th class="text-center">Fecha</th>
 							<th class="text-left">Monto</th>
 							{#
@@ -27,6 +30,9 @@
 							<td class="text-center" >{{transferencia.cajaEnvia.nombre|default('ninguno')}}</td>
 							<td class="text-center" >{{transferencia.cajaRecibe.nombre|default('ninguno')}}</td>
 							<td class="text-center" >{{transferencia.tipo}}</td>
+							<td class="text-center" >{{transferencia.asociacion.nombre}}</td>
+							<td class="text-center" >{{transferencia.codigo.iniciales}}</td>
+							<td class="text-center" >{{transferencia.fuente.nombre}}</td>
 							<td class="text-center" >{{transferencia.fecha|date('d-m-Y')}}</td>
 							<td class="text-left text-bold">{{transferencia.monto|number_format(2,',','.')}} R$</td>
 								{#

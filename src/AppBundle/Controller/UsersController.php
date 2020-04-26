@@ -133,7 +133,7 @@ class UsersController extends Controller
     /**
      * @Route("/register" , name="users_register")
      */
-    public function registerAction(Request $request)
+    public function registerAction(Request $request , \Swift_Mailer $mailer)
     {
         $em =$this->getDoctrine()->getManager(); 
         if ($request->get('username')) {
@@ -162,6 +162,15 @@ class UsersController extends Controller
             $em->persist($evento);
             $em->persist($user);
             $em->flush();
+            $message = (new \Swift_Message('Notificacion'))
+            ->setSubject('Registro exitoso')
+            ->setFrom('info@financeirocheznous.org')
+            ->setTo($user->getEmail())
+            ->setBody(
+                $this->renderView(
+                    'AppBundle:Email:registro.html.twig',
+                    array('user' => $user)),'text/html');
+            $mailer->send($message);
             return $this->redirectToRoute('thanks');
         }
         return $this->render('AppBundle:Users:register.html.twig', array(
@@ -263,7 +272,7 @@ class UsersController extends Controller
      */
      public function changeAction(Request $request , \Swift_Mailer $mailer)
      {
-        $em =$this->getDoctrine()->getManager(); 
+        $em =$this->getDoctrine()->getManager();
         $user = $em->getRepository('AppBundle:User')
         ->find($request->get('id')); 
         if ($user->getActive()) {

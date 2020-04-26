@@ -15,16 +15,16 @@ class DefaultController extends Controller
 	public function indexAction(Request $request)
 	{
 		$em =$this->getDoctrine()->getManager(); 
-		$google = new \Google_Client();
-		$google->setApplicationname('google sheets and php');
-		$google->setScopes([\Google_Service_Sheets::SPREADSHEETS]);
-		$google->setAccessType('offline');
-		$google->setAuthConfig(__DIR__.'/../../../web/google/credentials.json');
-		$service = new \Google_Service_Sheets($google);
-		$spreadSheetId = "1l274qdHVj3_beytyT-s-ZbE8pSuwao6qnUq7DgIhnIY";
-		$range = "Hoja 1!A2:I";
-		$response = $service->spreadsheets_values->get($spreadSheetId,$range);
-		$values = $response->getValues();
+		// $google = new \Google_Client();
+		// $google->setApplicationname('google sheets and php');
+		// $google->setScopes([\Google_Service_Sheets::SPREADSHEETS]);
+		// $google->setAccessType('offline');
+		// $google->setAuthConfig(__DIR__.'/../../../web/google/credentials.json');
+		// $service = new \Google_Service_Sheets($google);
+		// $spreadSheetId = "1l274qdHVj3_beytyT-s-ZbE8pSuwao6qnUq7DgIhnIY";
+		// $range = "Hoja 1!A2:I";
+		// $response = $service->spreadsheets_values->get($spreadSheetId,$range);
+		// $values = $response->getValues();
 		/*
 		foreach ($values as $val) {
 			$caja  = new Caja;
@@ -81,7 +81,7 @@ class DefaultController extends Controller
 			'cajas'=>$cajas,
 			'users'=>$users,
 			'pendientes'=>$pendientes,
-			'values'=> $values,
+			// 'values'=> $values,
 		]);
 	}
 

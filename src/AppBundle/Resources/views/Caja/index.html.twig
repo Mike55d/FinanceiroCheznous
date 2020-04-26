@@ -14,6 +14,8 @@
 							<th class="text-center" >Nombre</th>
 							<th class="text-center" >Orden</th>
 							<th class="text-left" >Saldo</th>
+							<th class="text-center">Activa</th>
+							<th class="text-center">Saldo negativo</th>
 							<th class="text-center" >Acciones</th>
 						</tr>
 					</thead>
@@ -24,6 +26,9 @@
 							<td class="text-center" >{{caja.nombre}}</td>
 							<td class="text-center" >{{caja.orden}}</td>
 							<td class="text-left text-bold">{{caja.saldo|number_format(2,',','.')}} R$</td>
+							<td class="text-center"><span style="display:none">{{caja.activa}}</span><input onchange="change({{caja.id}})" type="checkbox" {% if caja.activa %}checked{% endif %} class="js-switch" data-color="#13dafe" /></td>
+							<td class="text-center"><span style="display:none">{{caja.negativo}}</span><input onchange="changeNegativo({{caja.id}})" type="checkbox" {% if caja.negativo %}checked{% endif %} class="js-switch" data-color="#c70039" /></td>
+
 							<td class="text-center" >
 								<a data-toggle="tooltip" data-placement="top" title="Editar" href="{{ path ('cajas_edit',{'id':caja.id})}}" class="btn btn-sm btn-warning "><i class="fa fa-pencil"></i></a>
 								<button onclick="del({{caja.id}},'{{caja.nombre}}')" data-toggle="tooltip" data-placement="top" title="Eliminar" class="btn btn-sm btn-danger "><i class="fa fa-remove"></i></button>
@@ -40,48 +45,69 @@
 	</div>
 </div>
 <div class="col-md-4">
-		<!-- sample modal content -->
-		<div class="modal fade " id="delCaja" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" style="display: none;">
-			<div class="modal-dialog modal-sm">
-				<div class="modal-content">
-					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-						<h4 class="modal-title" id="mySmallModalLabel"></h4>Eliminar Caja</div>
-						<div class="modal-body text-center"><p>
-							Seguro que quieres 
-							eliminar esta Caja ?
-						</p>
-						<h6 id="nameUser"></h6>
-					</div>
-						<div class="modal-footer">
-							<a href="" id="btn-del" class="btn btn-danger">Eliminar</a>
-						</div>
-					</div>
-					<!-- /.modal-content -->
+	<!-- sample modal content -->
+	<div class="modal fade " id="delCaja" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" style="display: none;">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+					<h4 class="modal-title" id="mySmallModalLabel"></h4>Eliminar Caja</div>
+					<div class="modal-body text-center"><p>
+						Seguro que quieres 
+						eliminar esta Caja ?
+					</p>
+					<h6 id="nameUser"></h6>
 				</div>
-				<!-- /.modal-dialog -->
+				<div class="modal-footer">
+					<a href="" id="btn-del" class="btn btn-danger">Eliminar</a>
+				</div>
 			</div>
-			<!-- /.modal -->
+			<!-- /.modal-content -->
 		</div>
+		<!-- /.modal-dialog -->
+	</div>
+	<!-- /.modal -->
+</div>
 {% endblock %}
 
 {% block javascripts %}
-    <script>
-    function del(id , name){
-    	$('#delCaja').modal('toggle');
+<script>
+function del(id , name){
+	$('#delCaja').modal('toggle');
 	$('#nameUser').text(name);
 	$('#btn-del').attr('href',`${id}/del`)
 }
-	var a = 0
+var a = 0
 $('#btn-del').click(function(){
 	console.log(a)
 	if (a) {
-	$(this).removeAttr('href');
+		$(this).removeAttr('href');
 	}
 	a++;
 })
-    	$('#cajas').DataTable({
-    		"ordering": false
-    	});
-    </script>
+$('#cajas').DataTable({
+	// "ordering": false
+});
+function change(id){
+	datos = 'id='+ id
+	$.ajax({
+		type:"POST",
+		url:"{{path ('cajas_active')}}",
+		data:datos,
+		success:function(r){
+		}
+	});
+}
+
+function changeNegativo(id){
+	datos = 'id='+ id
+	$.ajax({
+		type:"POST",
+		url:"{{path ('cajas_negativo')}}",
+		data:datos,
+		success:function(r){
+		}
+	});
+}
+</script>
 {% endblock %}

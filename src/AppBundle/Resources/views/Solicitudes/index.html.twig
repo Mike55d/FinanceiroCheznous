@@ -15,6 +15,9 @@
 							<th class="text-center">Usuario que Solicita</th>
 							<th class="text-center">Usuario que Aprueba</th>
 							<th class="text-center">Status</th>
+							<th class="text-center">Asociacion</th>
+							<th class="text-center">Codigo</th>
+							<th class="text-center">Fuente</th>
 							<th class="text-center">Fecha</th>
 							<th class="text-left">Monto</th>
 							<th class="text-center">Acciones</th>
@@ -29,6 +32,9 @@
 							<td class="text-center" >{{solicitud.userSolicita.name|default('ninguno')}}</td>
 							<td class="text-center" >{{solicitud.userAprueba.name|default('ninguno')}}</td>
 							<td class="text-center" >{{solicitud.status}}</td>
+							<td class="text-center" >{{solicitud.asociacion.nombre}}</td>
+							<td class="text-center" >{{solicitud.codigo.iniciales}}</td>
+							<td class="text-center" >{{solicitud.fuente.nombre}}</td>
 							<td class="text-center" >{{solicitud.fecha|date('d-m-Y')}}</td>
 							<td class="text-left text-bold">{{solicitud.monto|number_format(2,',','.')}} R$</td>
 							<td>

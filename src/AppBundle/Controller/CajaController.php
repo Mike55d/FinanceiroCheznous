@@ -29,6 +29,27 @@ class CajaController extends Controller
    ));
   }
 
+
+  /**
+   * @Route("/misCajas" , name="misCajas")
+   */
+  public function misCajasAction(Request $request)
+  {
+    $em =$this->getDoctrine()->getManager(); 
+    $user = $this->get('security.token_storage')
+    ->getToken()->getUser(); 
+    $cajasResponsable  = $em->getRepository('AppBundle:responsablesCaja')->findBy(['user'=>$user]);
+    $misCajas = [];
+    foreach ($cajasResponsable as $responsable) {
+      if ($responsable->getCaja()->getActiva()) {
+        $misCajas[] = $responsable;
+      }
+    }
+    return $this->render('AppBundle:Caja:indexUser.html.twig', array(
+     'cajas'=> $misCajas,
+   ));
+  }
+
   /**
    * @Route("/new" , name="cajas_new")
    */
@@ -47,9 +68,9 @@ class CajaController extends Controller
       $caja->setSaldo($request->get('saldo'));
       $caja->setTipo($request->get('tipo'));
       $caja->setImage('default_box.png');
+      $caja->setActiva(1);
       $caja->setCodigo($request->get('codigo'));
       $caja->setDescripcion($request->get('descripcion'));
-
 
       //insertar imagen
       if ($request->get('image')) {
@@ -221,6 +242,60 @@ class CajaController extends Controller
       $res = true;
     }
     return new JsonResponse($res);
+  }
+
+  /**
+  * @Route("/active" , name="cajas_active")
+  */
+  public function changeAction(Request $request , \Swift_Mailer $mailer)
+  {
+    $em =$this->getDoctrine()->getManager(); 
+    $caja = $em->getRepository('AppBundle:Caja')
+    ->find($request->get('id')); 
+    if ($caja->getActiva()) {
+      $caja->setActiva(0);
+    }else{
+      // $message = (new \Swift_Message('Notificacion'))
+      // ->setSubject('Notificaciones')
+      // ->setFrom('info@financeirocheznous.org')
+      // ->setTo($caja->getEmail())
+      // ->setBody(
+      //     $this->renderView(
+      //         'AppBundle:Email:confirm.html.twig',
+      //         array('caja' => $caja)),'text/html');
+
+      // $mailer->send($message);
+      $caja->setActiva(1);
+    }
+    $em->flush();
+    return new JsonResponse(1);
+  }
+
+  /**
+  * @Route("/negativo" , name="cajas_negativo")
+  */
+  public function saldoNegativoAction(Request $request , \Swift_Mailer $mailer)
+  {
+    $em =$this->getDoctrine()->getManager(); 
+    $caja = $em->getRepository('AppBundle:Caja')
+    ->find($request->get('id')); 
+    if ($caja->getNegativo()) {
+      $caja->setNegativo(0);
+    }else{
+      $caja->setNegativo(1);
+      // $message = (new \Swift_Message('Notificacion'))
+      // ->setSubject('Notificaciones')
+      // ->setFrom('info@financeirocheznous.org')
+      // ->setTo($caja->getEmail())
+      // ->setBody(
+      //     $this->renderView(
+      //         'AppBundle:Email:confirm.html.twig',
+      //         array('caja' => $caja)),'text/html');
+
+      // $mailer->send($message);
+    }
+    $em->flush();
+    return new JsonResponse(1);
   }
 
 }

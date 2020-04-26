@@ -82,3 +82,15 @@ span.select2-container{
 	background-color: #719192 !important;
 	color: white;
 }
+
+.font-12{
+	font-size: 12px;
+}
+
+.input-monto{
+	font-size: 26px;
+	font-weight: bold;
+	background-color: yellow;
+	color: black;
+	border-radius: 8px;
+}

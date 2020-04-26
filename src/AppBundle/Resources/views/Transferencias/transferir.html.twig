@@ -3,26 +3,44 @@
 <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/css/select2.css" rel="stylesheet" type="text/css" />
 {% endblock %}
 {% block body %}
-{{dump(blue)}}
 <div class="row">
 	<div class="col-md-4 col-md-offset-4">
 		<div class="white-box">
 			<form id="formTransfer" method="post">
 				<h3 class="box-title text-center">Transferir</h3>
 				<label for="">Caja a debitar</label>
-				<select required class="select2" name="envia" id="misCajas">
+				<select required name="envia" id="misCajas">
 					<option></option>
 				</select><br>
 				<h6 style="display:none" id="saldo">Saldo : </h6>
-				<label for="">Caja destino</label>
-				<select required class="select2" name="recibe" id="Cajas">
+				<br>
+				<label for="">Caja destino <small>( con asociaciones en común )</small></label>
+				<select required name="recibe" id="Cajas">
 					<option></option>
 				</select><br>
 				<br>
+				<label for="">Asociaciones</label>
+				<select required name="asociacion" id="Asociaciones">
+					<option></option>
+				</select><br>
+				<br>
+				<label for="">Codigos</label>
+				<select required name="codigo" id="Codigos">
+					<option></option>
+				</select><br>
+				<br>
+				<label for="">Fuentes</label>
+				<select required name="fuente" id="Fuentes">
+					<option></option>
+				</select><br>
+				<br><br>
+				<label for="">Valor a transferir</label>
 				<input hidden type="text" id="monto2" name="monto">
-				<input  id="monto" required class="form-control input-lg" placeholder="0,00 R$" type="text"><br>
+				<input  id="monto" required class="form-control input-lg input-monto" placeholder="0,00 R$" type="text"><br>
+				<p id="montoMessage" style="display:none" class="h4 font-bold text-danger">Saldo insuficiente</p>
+				<p id="montoMessage2" style="display:none" class="h4 font-bold text-danger">Introduzca un monto</p>
+				<br>
 				<button id="send" class="btn btn-primary center-block">Enviar</button><br>
-				<p id="montoMessage" style="display:none" class="text-danger">Saldo insuficiente</p>
 			</form>
 		</div>
 	</div>
@@ -33,77 +51,147 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/js/select2.js" type="text/javascript"></script>
 <script>
 $(document).ready(function(){
+
 	$('#misCajas').change(function(){
 		if (!$('#misCajas').val()) {
 			$('#saldo').hide();
 		}
 	})
+
 	var data = JSON.parse('{{newCajas | raw}}');
-	var data2 = JSON.parse('{{newCajas2 | raw}}');
-	var blue = JSON.parse('{{blue}}')
-	console.log(blue);
+	var data2 = JSON.parse('{{newCodigos | raw}}');
+	var saldo = 0;
 
 	function formatState (state) {
-  var $state = $(
-  	`<p>
-  	<div style="background-image: url(/img/allImg/${state.image});" class="img-flag alineado"></div>
-  	${state.text}
-  	</p>`
-  	);
-  return $state;
-};
+		var $state = $(
+			`<p>
+			<div style="background-image: url(/img/allImg/${state.image});" class="img-flag alineado"></div>
+			${state.text}
+			</p>`
+			);
+		return $state;
+	};
 
-	// For select 2
+	//select 2 mis cajas
 	$("#misCajas").select2({
 		placeholder: "Seleccione una caja",
 		allowClear: true,
 		data:data,
 		templateResult: formatState,
 	});
-	// For select 2
-	$("#Cajas").select2({
+
+	//select 2 cajas
+	var cajaDestino = $("#Cajas").select2({
 		placeholder: "Seleccione una caja",
 		allowClear: true,
-		data:data2,
-		templateResult: formatState,
+		data:null,
+		templateResult:formatState,
 	});
 
-	var saldo = 0;
+	//select 2 asociaciones
+	var asociaciones = $("#Asociaciones").select2({
+		placeholder: "Seleccione una asociacion",
+		allowClear: true,
+		data:null,
+	});
 
+	//select 2 codigos
+	var codigos = $("#Codigos").select2({
+		placeholder: "Seleccione un codigo",
+		allowClear: true,
+		data:data2,
+	});
+
+	//select 2 fuentes
+	var fuentes = $("#Fuentes").select2({
+		placeholder: "Seleccione una fuente",
+		allowClear: true,
+		data:null,
+	});
+
+
+
+	// ON SELECT MIS CAJAS 
 	$('#misCajas').on('select2:select', function (e) {
-		var data = e.params.data;
+		var data = e.params.data
+		cajaDestino.empty().trigger('change');
+		cajaDestino.html('<option></option>');
+		asociaciones.html('<option></option>');
+		asociaciones.empty().trigger('change');
+		cajaDestino.select2({
+			placeholder: "Seleccione una caja",
+			allowClear: true,
+			data:data.cajasTransferir,
+			templateResult: formatState,
+		})
 		saldo = data.saldo
+		$('#monto').attr('max',saldo);
 		if ($('#misCajas').val()) {
-			console.log('black');
 			$('#saldo').text('Saldo : ' + saldo);
 			$('#saldo').show();
-		}else{
-			console.log('blue');
 		}
-		console.log(data);
 	});
-	
 
+	// ON SELECT CAJAS
+	$('#Cajas').on('select2:select', function (e) {
+		var data = e.params.data;
+		asociacionesData = [];
+		for (var i = 0; i < data.asociaciones.length; i++) {
+			asociacionesData.push({
+				'id':data.asociaciones[i].asociacion.id,
+				'text':data.asociaciones[i].asociacion.nombre
+			});
+		}
+		asociaciones.empty().trigger('change');
+		asociaciones.html('<option></option>');
+		asociaciones.select2({
+			placeholder: "Seleccione una caja",
+			allowClear: true,
+			data:asociacionesData,
+		});
+	});
+
+
+	// ON SELECT CODIGOS
+	$('#Codigos').on('select2:select', function (e) {
+		var data = e.params.data;
+		fuentes.empty().trigger('change');
+		fuentes.html('<option></option>');
+		fuentes.select2({
+			placeholder: "Seleccione una fuente",
+			allowClear: true,
+			data:data.fuentes,
+		})
+	});
+
+
+	$('#monto').val('0,00 R$');
 	$("#monto").maskMoney({thousands:'.', decimal:',', allowZero: true, suffix: ' R$'});
+
 	$('#formTransfer').on('submit',function(e){
 		e.preventDefault();
 	})
+
 	$('#send').click(function(){
 		var monto = $('#monto').maskMoney('unmasked')[0];
-		console.log(monto);
-		console.log(saldo);
-		if ($('#misCajas').val()) {
-			if (saldo - monto >= 0) {
-				$('#montoMessage').hide();
-				$('#formTransfer').unbind('submit');
-				$('#monto2').val(monto);
-				$('#formTransfer').trigger('submit');
-				$('#send').unbind('click');
+		if (document.getElementById("formTransfer").checkValidity()) {
+			if (monto > 0) {
+				$('#montoMessage2').hide();
+				if (saldo - monto >= 0) {
+					$('#montoMessage').hide();
+					$('#formTransfer').unbind('submit');
+					$('#monto2').val(monto);
+					$('#formTransfer').trigger('submit');
+					$('#send').unbind('click');
+				}else{
+					$('#montoMessage').show();
+				}
 			}else{
-				$('#montoMessage').show();
+				$('#montoMessage2').show();
 			}
 		}
 	})
+
 });
 </script>
 {% endblock %}

@@ -1,0 +1,94 @@
+{% extends "::base.html.twig" %}
+
+{% block body %}
+<div class="row">
+	<div class="col-md-12">
+		<div class="white-box">
+			<div class="box-title">Mis Cajas</div>
+			<div class="table-responsive">
+				<table id="cajas" class="table table-striped table-hover">
+					<thead>
+						<tr>
+							<th class="text-center" >Codigo</th>
+							<th class="text-center" >Nombre</th>
+							<th class="text-center" >Orden</th>
+							<th class="text-left" >Saldo</th>
+							<th class="text-center">Activa</th>
+							<th class="text-center">Saldo negativo</th>
+							<th class="text-center">Responsable</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for caja in cajas %}
+						<tr >
+							<td class="text-center" >{{caja.caja.codigo|default('ninguno')}}</td>
+							<td class="text-center" >{{caja.caja.nombre}}</td>
+							<td class="text-center" >{{caja.caja.orden}}</td>
+							<td class="text-left text-bold">{{caja.caja.saldo|number_format(2,',','.')}} R$</td>
+							<td class="text-center"><input readonly type="checkbox" {% if caja.caja.activa %}checked{% endif %} class="js-switch" data-color="#13dafe" /></td>
+							<td class="text-center"><input readonly type="checkbox" {% if caja.caja.negativo %}checked{% endif %} class="js-switch" data-color="#c70039" /></td>
+							<td class="text-center">{% if caja.responsable %}SI {% else %}NO{% endif %}</td>
+						</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="col-md-4">
+	<!-- sample modal content -->
+	<div class="modal fade " id="delCaja" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" style="display: none;">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+					<h4 class="modal-title" id="mySmallModalLabel"></h4>Eliminar Caja</div>
+					<div class="modal-body text-center"><p>
+						Seguro que quieres 
+						eliminar esta Caja ?
+					</p>
+					<h6 id="nameUser"></h6>
+				</div>
+				<div class="modal-footer">
+					<a href="" id="btn-del" class="btn btn-danger">Eliminar</a>
+				</div>
+			</div>
+			<!-- /.modal-content -->
+		</div>
+		<!-- /.modal-dialog -->
+	</div>
+	<!-- /.modal -->
+</div>
+{% endblock %}
+
+{% block javascripts %}
+<script>
+function del(id , name){
+	$('#delCaja').modal('toggle');
+	$('#nameUser').text(name);
+	$('#btn-del').attr('href',`${id}/del`)
+}
+var a = 0
+$('#btn-del').click(function(){
+	console.log(a)
+	if (a) {
+		$(this).removeAttr('href');
+	}
+	a++;
+})
+$('#cajas').DataTable({
+	"ordering": false
+});
+function change(id){
+	datos = 'id='+ id
+	$.ajax({
+		type:"POST",
+		url:"{{path ('cajas_active')}}",
+		data:datos,
+		success:function(r){
+		}
+	});
+}
+</script>
+{% endblock %}
