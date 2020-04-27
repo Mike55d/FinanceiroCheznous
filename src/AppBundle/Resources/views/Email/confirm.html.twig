@@ -5,39 +5,31 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title>Admin Responsive web app kit</title>
 </head>
-<body style="margin:0px; background: #f8f8f8; ">
-<div width="100%" style="background: #f8f8f8; padding: 0px 0px; font-family:arial; line-height:28px; height:100%;  width: 100%; color: #514d6a;">
-  <div style="max-width: 700px; padding:50px 0;  margin: 0px auto; font-size: 14px">
-    <table border="0" cellpadding="0" cellspacing="0" style="width: 100%; margin-bottom: 20px">
-      <tbody>
-        {#
-        <tr>
-          <td style="vertical-align: top; padding-bottom:30px;" align="center"><a href="javascript:void(0)" target="_blank"><img src="../plugins/images/admin-logo-dark.png" alt="Admin Responsive web app kit" style="border:none"><br/>
-            <img src="../plugins/images/admin-text-dark.png" alt="admin Responsive web app kit" style="border:none"></a> </td>
-        </tr>
-          #}
-      </tbody>
-    </table>
-    <div style="padding: 40px; background: #fff;">
+<body style="margin:0px; background: #d5c455; ">
+<div width="100%" style="background: #d5c455; padding: 0px 0px; font-family:arial; line-height:28px; height:100%;  width: 100%; color: #1b262c;">
+  <div style="max-width: 70%; padding:50px 0;  margin: 0px auto; font-size: 14px ">
+    <!-- <img src="{{ asset ('img/fondo.jpg')}}" alt="" /> -->
+    <div style="padding: 40px; background: #fff; ;border: 1px solid #e1f4f3 ; border-radius: 20px;">
+    <div style="background-image: url(https://financeirocheznous.org/ample/images/fondo.jpg);height: 200px; background-position: 0px -115px;  border-radius: 20px;"></div>
       <table border="0" cellpadding="0" cellspacing="0" style="width: 100%;">
         <tbody>
           <tr>
-            <td><b>¡Salve María! {{user.name}} </b>
-              <p>Tu usuario ha sido activado</p>
-              <p>Usuario : <span style="font-weight: bold">{{user.username}}</span></p>
+            <td>
+              <h1 style="font-size: 50px ;text-align: center;">¡Salve María! {{user.username}}</h1>
+              <h2>Tu usuario ha sido activado</h2>
+              <h2>Usuario : <span style="font-weight: bold ; color: #1b262c;">{{user.username}}</span></h2>
               {% if user.pw %}
-                <p>Contraseña : <span style="font-weight: bold">{{user.pw}}</span></p>
+              <h2>Contraseña : <span style="font-weight: bold ;  color: #1b262c;">{{user.pw}}</span></h2>
               {% endif %}
-              <a href="http://financeirocheznous.org" style="display: inline-block; padding: 11px 30px; margin: 20px 0px 30px; font-size: 15px; color: #fff; background: #1e88e5; border-radius: 60px; text-decoration:none;"> Ir a la web</a>
+              <a href="https://financeirocheznous.org" style=" width: 150px ;text-align: center;display: block; padding: 11px 30px; margin: 0 auto; font-size: 25px; color: #fff; background: #004445; border-radius: 10px; text-decoration:none;"> Ir a la web</a>
               <p>Un saludo.</p>
             </td>
           </tr>
         </tbody>
       </table>
     </div>
-    <div style="text-align: center; font-size: 12px; color: #b2b2b5; margin-top: 20px">
-      <p> Powered by Themedesigner.in <br>
-        <a href="javascript: void(0);" style="color: #b2b2b5; text-decoration: underline;">Unsubscribe</a> </p>
+    <div style="text-align: center; font-size: 12px; color: #1b262c; margin-top: 20px">
+      <p> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eaque eum, ut ipsam quam numquam autem omnis minima suscipit, officiis voluptates delectus officia ipsa nobis voluptate similique, eius aliquid unde est.</p>
     </div>
   </div>
 </div>

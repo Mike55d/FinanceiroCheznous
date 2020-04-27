@@ -29,7 +29,7 @@
 							<td class="text-center">
 								<a data-toggle="tooltip" data-placement="top" title="Editar" href="{{ path ('codigos_edit',{'id':codigo.id})}}" class="btn btn-sm btn-warning m-r-5"><i class="fa fa-pencil"></i></a>
 								<button onclick="del({{codigo.id}})" data-toggle="tooltip" data-placement="top" title="Eliminar" class="btn btn-sm btn-danger m-r-5"><i class="fa fa-remove"></i></button>
-								<a class="btn btn-success btn-sm " href="{{ path ('add_fuentes' , {id:codigo.id})}}"><i class="mdi mdi-book font-12"></i></a>
+								<a data-toggle="tooltip" data-placement="top" title="Fuentes" class="btn btn-success btn-sm " href="{{ path ('add_fuentes' , {id:codigo.id})}}"><i class="mdi mdi-book font-12"></i></a>
 							</td>
 						</tr>
 						{% endfor %}

@@ -24,14 +24,14 @@ class FuentesCodigos
 
     /**
     * @ORM\ManyToOne(targetEntity="Codigo")
-    * @ORM\JoinColumn(name="codigo", referencedColumnName="id")
+    * @ORM\JoinColumn(name="codigo", referencedColumnName="id" ,onDelete="CASCADE")
     */
     private $codigo;
 
 
     /**
     * @ORM\ManyToOne(targetEntity="Fuente")
-    * @ORM\JoinColumn(name="fuente", referencedColumnName="id")
+    * @ORM\JoinColumn(name="fuente", referencedColumnName="id" ,onDelete="CASCADE")
     */
     private $fuente;
 

@@ -10,6 +10,8 @@
 <div class="row">
 	<div class="col-md-12">
 		<div class="white-box">
+			<a class="btn btn-primary right" href="{{ path ('cajas_index')}}">Atras</a>
+			<br><br>
 			<div class="box-title">Editar Caja  <span class="text-danger">{{ caja.codigo}}</span></div>
 			<form method="post" >
 				<div class="row">
@@ -49,10 +51,13 @@
 						<label for="">Asociaciones</label>
 						<select id="asociaciones" required class="form-control m-b-5" multiple="true" name="asociaciones[]" id="">
 							{% for asociacion in asociaciones  %}
-								<option {% if asociacion in asociacionesCaja %}selected{% endif %} value="{{asociacion.id}}">{{asociacion.nombre}}  {{asociacion.codigo}}</option>
+							<option {% if asociacion in asociacionesCaja %}selected{% endif %} value="{{asociacion.id}}">{{asociacion.nombre}}  {{asociacion.codigo}}</option>
 							{% endfor %}
 						</select><br><br>
-						<button class="btn btn-success center-block editarRegistro">Actualizar</button>
+						<div >
+							<a class="btn btn-danger right" href="{{ path ('cajas_index')}}">Cancelar</a>
+							<button class="btn btn-success  editarRegistro">Actualizar</button>
+						</div>
 					</div>
 				</div>
 			</form>

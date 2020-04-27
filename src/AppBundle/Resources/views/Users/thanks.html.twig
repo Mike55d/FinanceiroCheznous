@@ -3,16 +3,19 @@
 <section id="wrapper" class="new-login-register">
 	<div class="lg-info-panel">
 		<div class="inner-panel">
-			<a href="javascript:void(0)" class="p-20 di"><img src="{{ asset ('ample/images/admin-logo.png')}}"></a>
 			<div class="lg-content">
 				<h2>FINANCEIRO CHEZNOUS</h2>
 				<h2></h2>
 			</div>
+		</div>
+	</div>
+	<div class="new-login-box">
+		<div class="well">
+				<h3>Su solicitud de registro esta siendo procesada , cuando sea aprobada por el administrador recibira un correo con sus datos de inicio</h3>
+				<div class="text-center">
+					<a href="{{ path ('homepage')}}" class="btn btn-success">Volver al inicio</a>
 			</div>
 		</div>
-		<div class="new-login-box">
-			<p>Su solicitud de registro esta siendo procesada , cuando sea aprobada por el administrador recibira un correo con sus datos de inicio</p>
-			<a href="{{ path ('homepage')}}" class="btn btn-success">Volver al inicio</a>
-			</div>
-	</section>
-	{% endblock %}
+	</div>
+</section>
+{% endblock %}

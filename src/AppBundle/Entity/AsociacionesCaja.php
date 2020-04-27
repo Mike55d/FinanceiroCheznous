@@ -24,14 +24,14 @@ class AsociacionesCaja
 
     /**
     * @ORM\ManyToOne(targetEntity="Caja")
-    * @ORM\JoinColumn(name="caja", referencedColumnName="id")
+    * @ORM\JoinColumn(name="caja", referencedColumnName="id" ,onDelete="CASCADE")
     */
     private $caja;
 
 
     /**
     * @ORM\ManyToOne(targetEntity="Asociacion")
-    * @ORM\JoinColumn(name="asociacion", referencedColumnName="id")
+    * @ORM\JoinColumn(name="asociacion", referencedColumnName="id" ,onDelete="CASCADE")
     */
     private $asociacion;
 

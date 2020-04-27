@@ -65,39 +65,48 @@
 				</div>
 			</div>
 		</div>
-	</section>
-	{% endblock %}
-	{% block javascripts %}
-	<script>
-	/* ===== Login and Recover Password ===== */
-	$('#to-recover').on("click", function () {
-		$("#loginform").slideUp();
-		$("#recoverform").fadeIn();
-	});
-	$('#login').on('click',function(){
-		$("#recoverform").fadeOut();
-		$('#loginform').slideDown();
-	});
-	$('#send').click(function(){
-		$('#send').text('Enviando...');
-		datos  = 'email='+$('#mail').val();
-		$.ajax({
-			type:"POST",
-			url:"{{path ('users_lostPw')}}",
-			data:datos,
-			success:function(r){
-				if (r){
-					$('#email').show();
-					$('#noEmail').hide();
+</section>
+{% endblock %}
+{% block javascripts %}
+<script>
+/* ===== Login and Recover Password ===== */
+$('#to-recover').on("click", function () {
+	$("#loginform").slideUp();
+	$("#recoverform").fadeIn();
+});
+$('#login').on('click',function(){
+	$("#recoverform").fadeOut();
+	$('#loginform').slideDown();
+});
 
-				}else{
-					$('#email').hide();
-					$('#noEmail').show();
-				}  
-				$('#send').text('Enviar');
-			}
+$('#mail').on('keyup',function(event){
+	if (event.keyCode === 13) {
+		enviarMail();
+	}
+})
+$('#send').click(function(){
+		enviarMail();
+});
 
-		});
+function enviarMail(){
+	$('#send').text('Enviando...');
+	datos  = 'email='+$('#mail').val();
+	$.ajax({
+		type:"POST",
+		url:"{{path ('users_lostPw')}}",
+		data:datos,
+		success:function(r){
+			if (r){
+				$('#email').show();
+				$('#noEmail').hide();
+			}else{
+				$('#email').hide();
+				$('#noEmail').show();
+			}  
+			$('#send').text('Enviar');
+		}
+
 	});
-	</script>
-	{% endblock %}
+}
+</script>
+{% endblock %}

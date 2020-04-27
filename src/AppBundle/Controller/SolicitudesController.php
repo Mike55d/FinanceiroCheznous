@@ -18,7 +18,7 @@ use AppBundle\Entity\Transaccion;
   {
 
   /**
-  * @Route("/{status}" , name="solicitudes_index")
+  * @Route("/search/{status}" , name="solicitudes_index")
   */
   public function indexAction($status = null)
   {

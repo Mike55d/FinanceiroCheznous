@@ -67,29 +67,29 @@ class Transaccion
     private $fecha;
 
     /**
-     * @var float
+     * @var decimal
      *
-     * @ORM\Column(name="monto", type="float" , scale=2)
+     * @ORM\Column(name="monto", type="decimal" , scale=2)
      */
     private $monto;
 
      /**
     * @ORM\ManyToOne(targetEntity="Asociacion")
-    * @ORM\JoinColumn(name="asociacion", referencedColumnName="id")
+    * @ORM\JoinColumn(name="asociacion", referencedColumnName="id" ,onDelete="SET NULL")
     */
 
     private $asociacion;
 
     /**
     * @ORM\ManyToOne(targetEntity="Codigo")
-    * @ORM\JoinColumn(name="codigo", referencedColumnName="id")
+    * @ORM\JoinColumn(name="codigo", referencedColumnName="id" ,onDelete="SET NULL")
     */
 
     private $codigo;
 
     /**
     * @ORM\ManyToOne(targetEntity="Fuente")
-    * @ORM\JoinColumn(name="fuente", referencedColumnName="id")
+    * @ORM\JoinColumn(name="fuente", referencedColumnName="id" ,onDelete="SET NULL")
     */
     private $fuente;
 

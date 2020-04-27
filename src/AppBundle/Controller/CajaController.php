@@ -39,14 +39,15 @@ class CajaController extends Controller
     $user = $this->get('security.token_storage')
     ->getToken()->getUser(); 
     $cajasResponsable  = $em->getRepository('AppBundle:responsablesCaja')->findBy(['user'=>$user]);
-    $misCajas = [];
-    foreach ($cajasResponsable as $responsable) {
-      if ($responsable->getCaja()->getActiva()) {
-        $misCajas[] = $responsable;
-      }
-    }
+    // buscar cajas activas e inactivas
+    // $misCajas = [];
+    // foreach ($cajasResponsable as $responsable) {
+    //   if ($responsable->getCaja()->getActiva()) {
+    //     $misCajas[] = $responsable;
+    //   }
+    // }
     return $this->render('AppBundle:Caja:indexUser.html.twig', array(
-     'cajas'=> $misCajas,
+     'cajas'=> $cajasResponsable,
    ));
   }
 
@@ -71,7 +72,6 @@ class CajaController extends Controller
       $caja->setActiva(1);
       $caja->setCodigo($request->get('codigo'));
       $caja->setDescripcion($request->get('descripcion'));
-
       //insertar imagen
       if ($request->get('image')) {
         $img = $request->get('image');
@@ -164,7 +164,7 @@ class CajaController extends Controller
         'notice',
         'Caja '.$caja->getNombre().' actualizada'
       );
-      return $this->redirectToRoute('cajas_index');
+      // return $this->redirectToRoute('cajas_index');
     }
     return $this->render('AppBundle:Caja:edit.html.twig', array(
       'caja' => $caja,

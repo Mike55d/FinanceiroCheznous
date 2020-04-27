@@ -7,6 +7,8 @@
 <div class="row">
 	<div class="col-md-12">
 		<div class="white-box">
+			<a class="btn btn-primary right" href="{{ path ('users_index')}}">Atras</a>
+			<br><br>
 			<div class="box-title">Editar Usuario <span class="text-danger">{{user.username}}</span></div>
 			<div id="pwMessage" style="display:none;"><p  class="text-danger">Contraseñas debe coincidir</p></div>
 			<form method="post" id="userForm">
@@ -34,7 +36,11 @@
 							<option {% if user.roles == 'ROLE_ADMIN'%}selected{% endif %} value="ROLE_ADMIN">ADMIN</option>
 							<option {% if user.roles == 'ROLE_SUPER_ADMIN'%}selected{% endif %} value="ROLE_SUPER_ADMIN">WEBMASTER</option>
 						</select>
-						<button id="send" class="btn btn-warning center-block">Editar</button>
+						<br>
+						<div class="text-center">
+							<a class="btn btn-danger right" href="{{ path ('users_index')}}">Cancelar</a>
+							<button id="send" class="btn btn-warning ">Editar</button>
+						</div>
 					</div>
 				</div>
 			</form>

@@ -95,14 +95,13 @@
                         <li> <a href="{{ path ('solicitudes_new')}}" class="waves-effect"><i class="mdi mdi-google-maps fa-fw"></i><span class="hide-menu">Solicitar</span></a> </li>
                         <li> <a href="{{ path ('misCajas')}}" class="waves-effect"><i class="mdi mdi-cube-send fa-fw"></i> <span class="hide-menu">Mis cajas</span></a></li>
                     {% endif %}
-
                     <li> <a href="#" class="waves-effect"><i class="mdi mdi-file-document-box fa-fw" data-icon="v"></i> <span class="hide-menu"> Solicitudes <span class="fa arrow"></span> </span></a>
                         <ul class="nav nav-second-level">
                             <li> <a href="{{path ('solicitudes_index')}}"><i class=" fa-fw"></i><span class="hide-menu">Todas </span></a> </li>
+                            <li> <a href="{{path ('solicitudes_index' , {'status':'pendiente'})}}"><i class=" fa-fw"></i><span class="hide-menu">Pendientes </span></a> </li>
+                            <li> <a href="{{path ('solicitudes_index' , {'status':'aprobada'})}}"><i class=" fa-fw"></i><span class="hide-menu">Aprobadas </span></a> </li>
+                            <li> <a href="{{path ('solicitudes_index' , {'status':'rechazada'})}}"><i class=" fa-fw"></i><span class="hide-menu">Rechazadas</span></a> </li>
                             {#
-                            <li> <a href="{{path ('solicitudes_pendientes')}}"><i class=" fa-fw"></i><span class="hide-menu">Pendientes </span></a> </li>
-                            <li> <a href="{{path ('solicitudes_aprobadas')}}"><i class=" fa-fw"></i><span class="hide-menu">Aprobadas </span></a> </li>
-                            <li> <a href="{{path ('solicitudes_rechazadas')}}"><i class=" fa-fw"></i><span class="hide-menu">Rechazadas</span></a> </li>
                             #}
                         </ul>
                     </li>
@@ -199,6 +198,7 @@
     <!-- /#wrapper -->
     <!-- jQuery -->
     <script src="{{ asset ('ample/bower_components/jquery/dist/jquery.min.js')}}"></script>
+     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <!-- Bootstrap Core JavaScript -->
     <script src="{{ asset ('ample/bootstrap/dist/js/bootstrap.min.js')}}"></script>
     <!-- Menu Plugin JavaScript -->
@@ -213,7 +213,6 @@
     <!--Style Switcher -->
     <script src="{{ asset ('ample/bower_components/styleswitcher/jQuery.style.switcher.js')}}"></script>
     <script src="{{ asset ('ample/bower_components/switchery/dist/switchery.min.js')}}"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     
     <script>
     // Switchery

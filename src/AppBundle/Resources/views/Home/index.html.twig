@@ -33,7 +33,7 @@
         </div>
         <div class="col-lg-3 col-sm-6 col-xs-12 text-center">
             <div class="white-box">
-                <a href="{{ path ('solicitudes_pendientes')}}" class="box-title">Solicitudes pendientes</a>
+                <a href="{{ path ('solicitudes_index',{'status':'pendiente'})}}" class="box-title">Solicitudes pendientes</a>
                 <ul class="list-inline m-t-30 p-t-10 two-part">
                     <li><i class="icon-folder-alt text-danger"></i></li>
                     <li class="text-right"><span class="">{{pendientes|length}}</span></li>

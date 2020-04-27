@@ -60,9 +60,9 @@ class Solicitud
     private $fecha;
 
     /**
-     * @var float
+     * @var decimal
      *
-     * @ORM\Column(name="monto", type="float" , scale=2)
+     * @ORM\Column(name="monto", type="decimal" , scale=2)
      */
     private $monto;
 

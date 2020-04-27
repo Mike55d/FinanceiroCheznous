@@ -128,9 +128,9 @@ class Caja
 
 
     /**
-     * @var float
+     * @var decimal
      *
-     * @ORM\Column(name="saldo", type="float" , scale=2)
+     * @ORM\Column(name="saldo", type="decimal" , scale=2)
      */
     private $saldo;
 

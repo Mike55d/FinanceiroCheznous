@@ -93,4 +93,15 @@ class DefaultController extends Controller
 		return $this->redirectToRoute('homepage',[
 		]);
 	}
+
+
+	/**
+	* @Route("/testMail", name="testMail")
+	*/
+	public function testMailAction(Request $request)
+	{
+		return $this->render('AppBundle:Email:test.html.twig',[
+
+		]);
+	}
 }
